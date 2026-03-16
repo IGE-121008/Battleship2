@@ -39,7 +39,8 @@ public class Scoreboard {
     public static Scoreboard loadScoreboard() {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader(FILE_NAME)) {
-            return gson.fromJson(reader, Scoreboard.class);
+            Scoreboard scoreboard = gson.fromJson(reader, Scoreboard.class);
+            return scoreboard != null ? scoreboard : new Scoreboard();
         } catch (IOException e) {
             return new Scoreboard();
         }
