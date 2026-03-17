@@ -18,8 +18,8 @@ public class App {
         scoreboard.printScoreboard();
         scoreboard.saveScoreboard();
 
-        // Tasks.taskA();
-        Tasks.taskB();
+        Tasks.taskA();
+        //Tasks.taskB();
         // Tasks.taskC();
         // Tasks.taskD();
     }

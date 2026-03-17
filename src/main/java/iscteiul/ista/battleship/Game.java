@@ -18,6 +18,7 @@ public class Game implements IGame {
     private Integer countRepeatedShots;
     private Integer countHits;
     private Integer countSinks;
+    private Board board;
 
 
     /**
@@ -28,6 +29,8 @@ public class Game implements IGame {
         countInvalidShots = 0;
         countRepeatedShots = 0;
         this.fleet = fleet;
+        this.board = new Board();
+        board.placeFleet(fleet);
     }
 
     /*
@@ -37,6 +40,14 @@ public class Game implements IGame {
      */
     @Override
     public IShip fire(IPosition pos) {
+        if (pos !=null)
+        {
+            board.markShot(pos, true);
+        }
+        else
+        {
+            board.markShot(pos, false);
+        }
         if (!validShot(pos))
             countInvalidShots++;
         else { // valid shot!
