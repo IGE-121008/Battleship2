@@ -13,14 +13,15 @@ public class App {
 
         System.out.printf("\n*** Battleship Game ***\n");
 
+        Tasks t = new Tasks();
+        Tasks.taskA();
+        //Tasks.taskB();
+        // Tasks.taskC();
+        //Tasks.taskD();
+
         Scoreboard scoreboard = Scoreboard.loadScoreboard();
         scoreboard.addPlayer1Win();
         scoreboard.printScoreboard();
         scoreboard.saveScoreboard();
-
-        Tasks.taskA();
-        //Tasks.taskB();
-        // Tasks.taskC();
-        // Tasks.taskD();
     }
 }

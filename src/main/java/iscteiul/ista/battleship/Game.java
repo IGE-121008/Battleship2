@@ -40,14 +40,6 @@ public class Game implements IGame {
      */
     @Override
     public IShip fire(IPosition pos) {
-        if (pos !=null)
-        {
-            board.markShot(pos, true);
-        }
-        else
-        {
-            board.markShot(pos, false);
-        }
         if (!validShot(pos))
             countInvalidShots++;
         else { // valid shot!
@@ -62,6 +54,14 @@ public class Game implements IGame {
                     if (!s.stillFloating()) {
                         countSinks++;
                         return s;
+                    }
+                    if (s !=null)
+                    {
+                        board.markShot(pos, true);
+                    }
+                    else
+                    {
+                        board.markShot(pos, false);
                     }
                 }
             }
@@ -131,8 +131,8 @@ public class Game implements IGame {
     }
 
     private boolean validShot(IPosition pos) {
-        return (pos.getRow() >= 0 && pos.getRow() <= Fleet.BOARD_SIZE && pos.getColumn() >= 0
-                && pos.getColumn() <= Fleet.BOARD_SIZE);
+        return (pos.getRow() >= 0 && pos.getRow() < Fleet.BOARD_SIZE && pos.getColumn() >= 0
+                && pos.getColumn() < Fleet.BOARD_SIZE);
     }
 
     private boolean repeatedShot(IPosition pos) {
@@ -180,6 +180,10 @@ public class Game implements IGame {
             shipPositions.addAll(s.getPositions());
 
         printBoard(shipPositions, '#');
+    }
+    public Board getBoard()
+    {
+        return board;
     }
 
 }
