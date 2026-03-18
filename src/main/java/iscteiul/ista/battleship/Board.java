@@ -21,17 +21,6 @@ public class Board {
             }
         }
     }
-
-    // Coloca a frota no tabuleiro, atribuindo letras específicas
-    public void placeFleet(IFleet fleet) {
-        for (IShip ship : fleet.getShips()) {
-            char symbol = getShipSymbol(ship);
-            for (IPosition pos : ship.getPositions()) {
-                shipLayer[pos.getRow()][pos.getColumn()] = symbol;
-            }
-        }
-    }
-
     // Marca um tiro no tabuleiro
     public void markShot(IPosition pos, boolean hit) {
         if (hit)
@@ -40,21 +29,42 @@ public class Board {
             grid[pos.getRow()][pos.getColumn()] = 'o';
     }
 
-    // Determina a letra do navio
+    // Coloca a frota no tabuleiro usando letras específicas
+    public void placeFleet(IFleet fleet) {
+        // Limpa a camada de navios antes de reposicionar
+        for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
+            for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+                if (grid[i][j] != 'X' && grid[i][j] != 'o') {
+                    grid[i][j] = '-';
+                }
+            }
+        }
+
+        for (IShip ship : fleet.getShips()) {
+            char symbol = getShipSymbol(ship);
+            for (IPosition pos : ship.getPositions()) {
+                // Só coloca letra se não houver X ou o
+                if (grid[pos.getRow()][pos.getColumn()] != 'X' && grid[pos.getRow()][pos.getColumn()] != 'o') {
+                    grid[pos.getRow()][pos.getColumn()] = symbol;
+                }
+            }
+        }
+    }
+
+    // Converte navio em letra
     private char getShipSymbol(IShip ship) {
-        String type = ship.getCategory().toLowerCase();
-        switch (type) {
+        switch (ship.getCategory().toLowerCase()) {
             case "caravel": return 'c';
-            case "carrack": return 'C';
+            case "nau":     return 'C';
             case "frigate": return 'F';
-            case "barge": return 'B';
+            case "barca":   return 'B';
+            case "galeao":  return 'G';
             default: return '#';
         }
     }
 
-    // Imprime o tabuleiro visual
+    // Imprime tabuleiro
     public void printVisual() {
-        // Cabeçalho superior
         System.out.print("  ");
         for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
             System.out.print((j + 1) + " ");
@@ -63,16 +73,9 @@ public class Board {
         System.out.println("****************************************");
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
-            System.out.print((char) ('A' + i) + " * ");
+            System.out.print((char)('A' + i) + " * ");
             for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-                char shot = grid[i][j];
-                if (shot == EMPTY) {
-                    // mostra navio se existe, senão vazio
-                    System.out.print((shipLayer[i][j] != EMPTY ? shipLayer[i][j] : EMPTY) + " ");
-                } else {
-                    // mostra acerto ou falha
-                    System.out.print(shot + " ");
-                }
+                System.out.print(grid[i][j] + " ");
             }
             System.out.println("*");
         }
