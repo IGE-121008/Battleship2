@@ -33,3 +33,4 @@ jobs:
             echo "Creating label: $NAME"
             gh label create "$NAME" --color "$COLOR" --description "$DESC"
           done
+# trigger workflow
