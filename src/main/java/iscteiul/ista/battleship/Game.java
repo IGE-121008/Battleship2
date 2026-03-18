@@ -129,7 +129,10 @@ public class Game implements IGame {
         List<IShip> floatingShips = fleet.getFloatingShips();
         return floatingShips.size();
     }
-
+    public boolean isGameOver()
+    {
+        return getRemainingShips() == 0;
+    }
     private boolean validShot(IPosition pos) {
         return (pos.getRow() >= 0 && pos.getRow() < Fleet.BOARD_SIZE && pos.getColumn() >= 0
                 && pos.getColumn() < Fleet.BOARD_SIZE);
