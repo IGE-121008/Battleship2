@@ -18,6 +18,7 @@ public class Game implements IGame {
     private Integer countRepeatedShots;
     private Integer countHits;
     private Integer countSinks;
+    private Board board;
 
 
     /**
@@ -28,6 +29,8 @@ public class Game implements IGame {
         countInvalidShots = 0;
         countRepeatedShots = 0;
         this.fleet = fleet;
+        this.board = new Board();
+        board.placeFleet(fleet);
     }
 
     /*
@@ -51,6 +54,14 @@ public class Game implements IGame {
                     if (!s.stillFloating()) {
                         countSinks++;
                         return s;
+                    }
+                    if (s !=null)
+                    {
+                        board.markShot(pos, true);
+                    }
+                    else
+                    {
+                        board.markShot(pos, false);
                     }
                 }
             }
@@ -118,10 +129,13 @@ public class Game implements IGame {
         List<IShip> floatingShips = fleet.getFloatingShips();
         return floatingShips.size();
     }
-
+    public boolean isGameOver()
+    {
+        return getRemainingShips() == 0;
+    }
     private boolean validShot(IPosition pos) {
-        return (pos.getRow() >= 0 && pos.getRow() <= Fleet.BOARD_SIZE && pos.getColumn() >= 0
-                && pos.getColumn() <= Fleet.BOARD_SIZE);
+        return (pos.getRow() >= 0 && pos.getRow() < Fleet.BOARD_SIZE && pos.getColumn() >= 0
+                && pos.getColumn() < Fleet.BOARD_SIZE);
     }
 
     private boolean repeatedShot(IPosition pos) {
@@ -169,6 +183,10 @@ public class Game implements IGame {
             shipPositions.addAll(s.getPositions());
 
         printBoard(shipPositions, '#');
+    }
+    public Board getBoard()
+    {
+        return board;
     }
 
 }

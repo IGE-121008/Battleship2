@@ -22,10 +22,19 @@ public class Tasks {
      * indicates whether the ship occupies each one of such positions or not
      */
     public static void taskA() {
+        Board board = new Board();        // cria tabuleiro
+        IFleet fleet = new Fleet();       // cria frota vazia
+
         Scanner in = new Scanner(System.in);
+
         while (in.hasNext()) {
-            Ship s = readShip(in);
+            Ship s = readShip(in);        // lê navio do utilizador
             if (s != null) {
+                fleet.addShip(s);         // adiciona navio à frota
+                board.placeFleet(fleet);  // atualiza o tabuleiro
+                board.printVisual();      // imprime tabuleiro atualizado
+
+                // opcional: ler posições de tiro para teste
                 for (int i = 0; i < NUMBER_SHOTS; i++) {
                     Position p = readPosition(in);
                     System.out.println(p + " " + s.occupies(p));
@@ -196,11 +205,19 @@ public class Tasks {
      * @param game The context game while fleet is being attacked
      */
     static void firingRound(Scanner in, IGame game) {
-        for (int i = 0; i < NUMBER_SHOTS; i++) {
+        for (int i = 0; i < NUMBER_SHOTS; i++)
+        {
             IPosition pos = readPosition(in);
             IShip sh = game.fire(pos);
-            if (sh != null)
-                System.out.println("Mas... mas... " + sh.getCategory() + "s nao sao a prova de bala? :-(");
+
+            //Mostrar o Board de cada jogada
+            ((Game) game).getBoard().printVisual();
+            System.out.println("-------------------");
+
+            if(sh !=null)
+            {
+                System.out.println("Navio afundado: " + sh.getCategory());
+            }
         }
     }
 }
