@@ -15,7 +15,7 @@ public class Galleon extends Ship {
         super(Galleon.NAME, bearing, pos);
 
         if (bearing == null)
-            throw new NullPointerException("ERROR! invalid bearing for the galleon");
+            throw new IllegalArgumentException("ERROR! invalid bearing for the galleon");
 
         switch (bearing) {
             case NORTH:

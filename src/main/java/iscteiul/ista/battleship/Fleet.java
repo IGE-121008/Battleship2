@@ -37,12 +37,19 @@ public class Fleet implements IFleet {
      */
     @Override
     public boolean addShip(IShip s) {
-        boolean result = false;
-        if ((ships.size() <= FLEET_SIZE) && (isInsideBoard(s)) && (!colisionRisk(s))) {
+        if (canPlaceShip(s)) {
             ships.add(s);
-            result = true;
+            return true;
         }
-        return result;
+        return false;
+    }
+
+    private boolean isFleetFull() {
+        return ships.size() >= FLEET_SIZE;
+    }
+
+    private boolean canPlaceShip(IShip s) {
+        return s != null && !isFleetFull() && isInsideBoard(s) && !colisionRisk(s);
     }
 
     /*
