@@ -204,19 +204,26 @@ public class Tasks {
      * @param in   The scanner to read from
      * @param game The context game while fleet is being attacked
      */
+
+
     static void firingRound(Scanner in, IGame game) {
-        for (int i = 0; i < NUMBER_SHOTS; i++)
-        {
+        for (int i = 0; i < NUMBER_SHOTS; i++) {
+
             IPosition pos = readPosition(in);
+
+            boolean hit = ((Game) game).wasHit(pos);
             IShip sh = game.fire(pos);
 
             //Mostrar o Board de cada jogada
             ((Game) game).getBoard().printVisual();
             System.out.println("-------------------");
 
-            if(sh !=null)
-            {
+            if (sh != null) {
                 System.out.println("Navio afundado: " + sh.getCategory());
+            } else if (hit) {
+                System.out.println("Acerto!");
+            } else {
+                System.out.println("Água!");
             }
         }
     }

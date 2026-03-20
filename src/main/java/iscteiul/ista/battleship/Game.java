@@ -6,11 +6,13 @@ package iscteiul.ista.battleship;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * @author fba
  *
  */
 public class Game implements IGame {
+
     private IFleet fleet;
     private List<IPosition> shots;
 
@@ -28,6 +30,8 @@ public class Game implements IGame {
         shots = new ArrayList<>();
         countInvalidShots = 0;
         countRepeatedShots = 0;
+        countHits = 0;
+        countSinks = 0;
         this.fleet = fleet;
         this.board = new Board();
         board.placeFleet(fleet);
@@ -40,32 +44,37 @@ public class Game implements IGame {
      */
     @Override
     public IShip fire(IPosition pos) {
-        if (!validShot(pos))
+
+        if (!validShot(pos)) {
             countInvalidShots++;
-        else { // valid shot!
-            if (repeatedShot(pos))
+        } else {
+
+            if (repeatedShot(pos)) {
                 countRepeatedShots++;
-            else {
+            } else {
+
                 shots.add(pos);
+
                 IShip s = fleet.shipAt(pos);
+
                 if (s != null) {
+                    //  HIT
                     s.shoot(pos);
                     countHits++;
+                    board.markShot(pos, true);
+
                     if (!s.stillFloating()) {
                         countSinks++;
-                        return s;
+                        return s; //  navio afundado
                     }
-                    if (s !=null)
-                    {
-                        board.markShot(pos, true);
-                    }
-                    else
-                    {
-                        board.markShot(pos, false);
-                    }
+
+                } else {
+                    //  MISS
+                    board.markShot(pos, false);
                 }
             }
         }
+
         return null;
     }
 
@@ -189,4 +198,13 @@ public class Game implements IGame {
         return board;
     }
 
+
+    public boolean wasHit(IPosition pos) {
+        IShip s = fleet.shipAt(pos);
+        return s != null;
+    }
+
+
 }
+
+
