@@ -104,17 +104,11 @@ public class Game implements IGame {
         }
     }
 
-    /**
-     * Prints the board showing valid shots that have been fired
-     */
     @Override
     public void printValidShots() {
         printBoard(getShots(), 'X');
     }
 
-    /**
-     * Prints the board showing the fleet
-     */
     @Override
     public void printFleet() {
         List<IPosition> shipPositions = new ArrayList<IPosition>();
@@ -129,7 +123,7 @@ public class Game implements IGame {
      * Prints the opponent board:
      * X = hit
      * O = water
-     * . = unknown
+     * - = unknown
      */
     @Override
     public void printOpponentBoard() {
@@ -137,7 +131,7 @@ public class Game implements IGame {
 
         for (int r = 0; r < Fleet.BOARD_SIZE; r++) {
             for (int c = 0; c < Fleet.BOARD_SIZE; c++) {
-                map[r][c] = '.';
+                map[r][c] = '-';
             }
         }
 
@@ -150,11 +144,32 @@ public class Game implements IGame {
             }
         }
 
-        for (int row = 0; row < Fleet.BOARD_SIZE; row++) {
-            for (int col = 0; col < Fleet.BOARD_SIZE; col++) {
-                System.out.print(map[row][col]);
-            }
-            System.out.println();
+        System.out.println();
+        System.out.print("    ");
+        for (int col = 1; col <= Fleet.BOARD_SIZE; col++) {
+            System.out.print(col + " ");
         }
+        System.out.println();
+
+        for (int i = 0; i < 2 * Fleet.BOARD_SIZE + 18; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+
+        for (int row = 0; row < Fleet.BOARD_SIZE; row++) {
+            char rowLetter = (char) ('A' + row);
+            System.out.print(rowLetter + " * ");
+
+            for (int col = 0; col < Fleet.BOARD_SIZE; col++) {
+                System.out.print(map[row][col] + " ");
+            }
+
+            System.out.println("*");
+        }
+
+        for (int i = 0; i < 2 * Fleet.BOARD_SIZE + 18; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
     }
 }
