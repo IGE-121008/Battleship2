@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements IGame {
+
     private IFleet fleet;
     private List<IPosition> shots;
 
@@ -11,6 +12,7 @@ public class Game implements IGame {
     private Integer countRepeatedShots;
     private Integer countHits;
     private Integer countSinks;
+    private Board board;
 
     public Game(IFleet fleet) {
         shots = new ArrayList<>();
@@ -19,28 +21,42 @@ public class Game implements IGame {
         countHits = 0;
         countSinks = 0;
         this.fleet = fleet;
+        this.board = new Board();
+        board.placeFleet(fleet);
     }
 
     @Override
     public IShip fire(IPosition pos) {
-        if (!validShot(pos))
+
+        if (!validShot(pos)) {
             countInvalidShots++;
         else {
             if (repeatedShot(pos))
                 countRepeatedShots++;
-            else {
+            } else {
+
                 shots.add(pos);
+
                 IShip s = fleet.shipAt(pos);
+
                 if (s != null) {
+                    //  HIT
                     s.shoot(pos);
                     countHits++;
+                    board.markShot(pos, true);
+
                     if (!s.stillFloating()) {
                         countSinks++;
-                        return s;
+                        return s; //  navio afundado
                     }
+
+                } else {
+                    //  MISS
+                    board.markShot(pos, false);
                 }
             }
         }
+
         return null;
     }
 
@@ -74,7 +90,10 @@ public class Game implements IGame {
         List<IShip> floatingShips = fleet.getFloatingShips();
         return floatingShips.size();
     }
-
+    public boolean isGameOver()
+    {
+        return getRemainingShips() == 0;
+    }
     private boolean validShot(IPosition pos) {
         return (pos.getRow() >= 0 && pos.getRow() < Fleet.BOARD_SIZE
                 && pos.getColumn() >= 0 && pos.getColumn() < Fleet.BOARD_SIZE);
@@ -118,6 +137,17 @@ public class Game implements IGame {
 
         printBoard(shipPositions, '#');
     }
+    public Board getBoard()
+    {
+        return board;
+    }
+
+
+    public boolean wasHit(IPosition pos) {
+        IShip s = fleet.shipAt(pos);
+        return s != null;
+    }
+
 
     /**
      * Prints the opponent board:
