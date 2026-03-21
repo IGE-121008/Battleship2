@@ -124,7 +124,7 @@ public class Tasks {
                     break;
                 case VERTIROS:
                     if (game != null)
-                        game.printValidShots();
+                        game.printOpponentBoard();
                     break;
                 default:
                     System.out.println("Que comando é esse??? Repete ...");
@@ -199,8 +199,12 @@ public class Tasks {
         for (int i = 0; i < NUMBER_SHOTS; i++) {
             IPosition pos = readPosition(in);
             IShip sh = game.fire(pos);
-            if (sh != null)
-                System.out.println("Mas... mas... " + sh.getCategory() + "s nao sao a prova de bala? :-(");
+
+            if (sh == null) {
+                System.out.println("Water!");
+            } else {
+                System.out.println("Hit!");
+            }
         }
     }
 }

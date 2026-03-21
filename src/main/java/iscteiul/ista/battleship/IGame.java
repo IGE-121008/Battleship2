@@ -1,6 +1,3 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.List;
@@ -23,4 +20,6 @@ public interface IGame {
     void printValidShots();
 
     void printFleet();
+
+    void printOpponentBoard();
 }
