@@ -52,42 +52,17 @@ public class Tasks {
                         current.printFleet();
                     break;
 
+                // ✅ FIXED PART (ONLY THIS WAS CHANGED)
                 case RAJADA:
                     if (current != null && opponent != null) {
 
-                        // ===== PLAYER 1 TURN =====
-                        if (current == player1) {
-                            System.out.println("===== PLAYER 1 TURN =====");
-                        } else {
-                            System.out.println("===== PLAYER 2 TURN =====");
-                        }
+                        while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
-                        System.out.println("Seu tabuleiro:");
-                        current.getBoard().printVisual();
-
-                        System.out.println("Tabuleiro do adversário:");
-                        opponent.getBoard().printOpponentBoard();
-
-                        firingRound(in, opponent);
-
-                        System.out.println(
-                                "Hits: " + opponent.getHits()
-                                        + " Inv: " + opponent.getInvalidShots()
-                                        + " Rep: " + opponent.getRepeatedShots()
-                                        + " Restam " + opponent.getRemainingShips() + " navios.");
-
-                        if (opponent.getRemainingShips() == 0)
-                            System.out.println("Maldito sejas, Java Sparrow...");
-
-                        // 🔁 SWITCH PLAYER
-                        Game temp = current;
-                        current = opponent;
-                        opponent = temp;
-
-                        // ✅ AUTOMATIC PLAYER 2 TURN
-                        if (current == player2) {
-
-                            System.out.println("===== PLAYER 2 TURN =====");
+                            if (current == player1) {
+                                System.out.println("===== PLAYER 1 TURN =====");
+                            } else {
+                                System.out.println("===== PLAYER 2 TURN =====");
+                            }
 
                             System.out.println("Seu tabuleiro:");
                             current.getBoard().printVisual();
@@ -103,21 +78,23 @@ public class Tasks {
                                             + " Rep: " + opponent.getRepeatedShots()
                                             + " Restam " + opponent.getRemainingShips() + " navios.");
 
-                            if (opponent.getRemainingShips() == 0)
+                            if (opponent.getRemainingShips() == 0) {
                                 System.out.println("Maldito sejas, Java Sparrow...");
+                                break;
+                            }
 
-                            // ✅ AUTOMATIC "ver"
-                            System.out.println("===== PLAYER 1 VIEW =====");
-                            player1.getBoard().printOpponentBoard();
-
-                            System.out.println("===== PLAYER 2 VIEW =====");
-                            player2.getBoard().printOpponentBoard();
-
-                            // 🔁 SWITCH BACK TO PLAYER 1
-                            temp = current;
+                            // 🔁 SWITCH PLAYERS AUTOMATICALLY
+                            Game temp = current;
                             current = opponent;
                             opponent = temp;
                         }
+
+                        // ✅ SHOW "ver" ONLY AT THE END
+                        System.out.println("===== PLAYER 1 VIEW =====");
+                        player1.getBoard().printOpponentBoard();
+
+                        System.out.println("===== PLAYER 2 VIEW =====");
+                        player2.getBoard().printOpponentBoard();
                     }
                     break;
 
