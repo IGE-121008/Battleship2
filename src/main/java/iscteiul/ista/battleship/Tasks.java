@@ -52,15 +52,18 @@ public class Tasks {
                         current.printFleet();
                     break;
 
-                // ✅ FIXED PART (ONLY THIS WAS CHANGED)
+                // ✅ FIXED GAME LOOP + TURN MESSAGE
                 case RAJADA:
                     if (current != null && opponent != null) {
 
                         while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
+                            // ✅ ONLY ADDITION (message)
                             if (current == player1) {
+                                System.out.println("\n👉 Player 1, your turn!");
                                 System.out.println("===== PLAYER 1 TURN =====");
                             } else {
+                                System.out.println("\n👉 Player 2, your turn!");
                                 System.out.println("===== PLAYER 2 TURN =====");
                             }
 
@@ -83,13 +86,13 @@ public class Tasks {
                                 break;
                             }
 
-                            // 🔁 SWITCH PLAYERS AUTOMATICALLY
+                            // 🔁 SWITCH PLAYERS
                             Game temp = current;
                             current = opponent;
                             opponent = temp;
                         }
 
-                        // ✅ SHOW "ver" ONLY AT THE END
+                        // ✅ SHOW BOARDS AT THE END
                         System.out.println("===== PLAYER 1 VIEW =====");
                         player1.getBoard().printOpponentBoard();
 
