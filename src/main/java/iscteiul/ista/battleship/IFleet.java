@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IFleet {
     Integer BOARD_SIZE = 10;
-    Integer FLEET_SIZE = 4;
+    Integer FLEET_SIZE = 10;
 
     List<IShip> getShips();
 
