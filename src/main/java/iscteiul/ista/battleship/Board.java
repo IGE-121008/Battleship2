@@ -21,6 +21,7 @@ public class Board {
             }
         }
     }
+
     // Marca um tiro no tabuleiro
     public void markShot(IPosition pos, boolean hit) {
         if (hit)
@@ -31,7 +32,6 @@ public class Board {
 
     // Coloca a frota no tabuleiro usando letras específicas
     public void placeFleet(IFleet fleet) {
-        // Limpa a camada de navios antes de reposicionar
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
             for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
                 if (grid[i][j] != 'X' && grid[i][j] != 'o') {
@@ -43,7 +43,6 @@ public class Board {
         for (IShip ship : fleet.getShips()) {
             char symbol = getShipSymbol(ship);
             for (IPosition pos : ship.getPositions()) {
-                // Só coloca letra se não houver X ou o
                 if (grid[pos.getRow()][pos.getColumn()] != 'X' && grid[pos.getRow()][pos.getColumn()] != 'o') {
                     grid[pos.getRow()][pos.getColumn()] = symbol;
                 }
@@ -63,7 +62,7 @@ public class Board {
         }
     }
 
-    // Imprime tabuleiro
+    // 🟦 NORMAL BOARD (your board)
     public void printVisual() {
         System.out.print("  ");
         for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
@@ -76,6 +75,34 @@ public class Board {
             System.out.print((char)('A' + i) + " * ");
             for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
                 System.out.print(grid[i][j] + " ");
+            }
+            System.out.println("*");
+        }
+
+        System.out.println("****************************************");
+    }
+
+    // 🟥 OPPONENT BOARD (YOUR TASK 🔥)
+    public void printOpponentBoard() {
+        System.out.print("  ");
+        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+            System.out.print((j + 1) + " ");
+        }
+        System.out.println();
+        System.out.println("****************************************");
+
+        for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
+            System.out.print((char)('A' + i) + " * ");
+            for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+
+                char c = grid[i][j];
+
+                // 🔥 ONLY show known info
+                if (c == 'X' || c == 'o') {
+                    System.out.print(c + " ");
+                } else {
+                    System.out.print("- ");
+                }
             }
             System.out.println("*");
         }
