@@ -55,6 +55,7 @@ public class Tasks {
                 case RAJADA:
                     if (current != null && opponent != null) {
 
+                        // ===== PLAYER 1 TURN =====
                         if (current == player1) {
                             System.out.println("===== PLAYER 1 TURN =====");
                         } else {
@@ -78,11 +79,48 @@ public class Tasks {
                         if (opponent.getRemainingShips() == 0)
                             System.out.println("Maldito sejas, Java Sparrow...");
 
+                        // 🔁 SWITCH PLAYER
                         Game temp = current;
                         current = opponent;
                         opponent = temp;
+
+                        // ✅ AUTOMATIC PLAYER 2 TURN
+                        if (current == player2) {
+
+                            System.out.println("===== PLAYER 2 TURN =====");
+
+                            System.out.println("Seu tabuleiro:");
+                            current.getBoard().printVisual();
+
+                            System.out.println("Tabuleiro do adversário:");
+                            opponent.getBoard().printOpponentBoard();
+
+                            firingRound(in, opponent);
+
+                            System.out.println(
+                                    "Hits: " + opponent.getHits()
+                                            + " Inv: " + opponent.getInvalidShots()
+                                            + " Rep: " + opponent.getRepeatedShots()
+                                            + " Restam " + opponent.getRemainingShips() + " navios.");
+
+                            if (opponent.getRemainingShips() == 0)
+                                System.out.println("Maldito sejas, Java Sparrow...");
+
+                            // ✅ AUTOMATIC "ver"
+                            System.out.println("===== PLAYER 1 VIEW =====");
+                            player1.getBoard().printOpponentBoard();
+
+                            System.out.println("===== PLAYER 2 VIEW =====");
+                            player2.getBoard().printOpponentBoard();
+
+                            // 🔁 SWITCH BACK TO PLAYER 1
+                            temp = current;
+                            current = opponent;
+                            opponent = temp;
+                        }
                     }
                     break;
+
                 case VERTIROS:
                     if (player1 != null && player2 != null) {
 
@@ -93,6 +131,7 @@ public class Tasks {
                         player2.getBoard().printOpponentBoard();
                     }
                     break;
+
                 default:
                     System.out.println("Que comando é esse??? Repete ...");
             }
@@ -159,7 +198,6 @@ public class Tasks {
         }
     }
 
-    // ✅ OPTIONAL TASK E (unchanged logic)
     public static void taskE() {
         Scanner in = new Scanner(System.in);
 
