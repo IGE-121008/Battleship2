@@ -108,6 +108,7 @@ public class Tasks {
                 case NOVAFROTA:
                     fleet = buildFleet(in);
                     game = new Game(fleet);
+                    ((Game) game).saveToJson("game_state.json");
                     break;
                 case STATUS:
                     if (fleet != null)
