@@ -5,6 +5,8 @@ package iscteiul.ista.battleship;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 /**
@@ -15,6 +17,7 @@ public class Game implements IGame {
 
     private IFleet fleet;
     private List<IPosition> shots;
+    private static final String SAVE_FILE = "game_state.json";
 
     private Integer countInvalidShots;
     private Integer countRepeatedShots;
@@ -65,7 +68,8 @@ public class Game implements IGame {
 
                     if (!s.stillFloating()) {
                         countSinks++;
-                        return s; //  navio afundado
+                        saveToJson(SAVE_FILE);
+                        return s;
                     }
 
                 } else {
@@ -75,6 +79,7 @@ public class Game implements IGame {
             }
         }
 
+        saveToJson(SAVE_FILE);
         return null;
     }
 
@@ -204,6 +209,69 @@ public class Game implements IGame {
         return s != null;
     }
 
+    public String toJson() {
+        StringBuilder json = new StringBuilder();
+
+        json.append("{\n");
+        json.append("  \"invalidShots\": ").append(countInvalidShots).append(",\n");
+        json.append("  \"repeatedShots\": ").append(countRepeatedShots).append(",\n");
+        json.append("  \"hits\": ").append(countHits).append(",\n");
+        json.append("  \"sunkShips\": ").append(countSinks).append(",\n");
+        json.append("  \"remainingShips\": ").append(getRemainingShips()).append(",\n");
+        json.append("  \"gameOver\": ").append(isGameOver()).append(",\n");
+
+        json.append("  \"shots\": [\n");
+        for (int i = 0; i < shots.size(); i++) {
+            IPosition p = shots.get(i);
+            json.append("    { \"row\": ").append(p.getRow())
+                    .append(", \"column\": ").append(p.getColumn()).append(" }");
+            if (i < shots.size() - 1)
+                json.append(",");
+            json.append("\n");
+        }
+        json.append("  ],\n");
+
+        json.append("  \"ships\": [\n");
+        List<IShip> allShips = fleet.getShips();
+        for (int i = 0; i < allShips.size(); i++) {
+            IShip ship = allShips.get(i);
+
+            json.append("    {\n");
+            json.append("      \"category\": \"").append(ship.getCategory()).append("\",\n");
+            json.append("      \"bearing\": \"").append(ship.getBearing()).append("\",\n");
+            json.append("      \"floating\": ").append(ship.stillFloating()).append(",\n");
+
+            json.append("      \"positions\": [\n");
+            List<IPosition> positions = ship.getPositions();
+            for (int j = 0; j < positions.size(); j++) {
+                IPosition pos = positions.get(j);
+                json.append("        { \"row\": ").append(pos.getRow())
+                        .append(", \"column\": ").append(pos.getColumn()).append(" }");
+                if (j < positions.size() - 1)
+                    json.append(",");
+                json.append("\n");
+            }
+            json.append("      ]\n");
+
+            json.append("    }");
+            if (i < allShips.size() - 1)
+                json.append(",");
+            json.append("\n");
+        }
+        json.append("  ]\n");
+
+        json.append("}\n");
+
+        return json.toString();
+    }
+
+    public void saveToJson(String fileName) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write(toJson());
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar estado do jogo em JSON.");
+        }
+    }
 
 }
 
