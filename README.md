@@ -102,5 +102,7 @@ Estes navios foram fundamentais na expansão marítima portuguesa dos séculos X
 #
 - Descobrimentos Portugueses : https://pt.wikipedia.org/wiki/Descobrimentos_portugueses
 
+###Git Hub Actions
+-Este Projecto utilizar o git Actions para executar automaticamente os testes unitários a cada push.
 
 
