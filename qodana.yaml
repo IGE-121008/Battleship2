@@ -4,10 +4,10 @@ profile:
   name: qodana.recommended
 
 include:
-  - name: MethodLength
+  - name: ClassTooLarge
 
   # Other code smell here:
-  # - name: ClassTooLarge
+  # - name: ClassTooLarge MethodLength
   # - name: DuplicateCode
 
 failThreshold: 1
