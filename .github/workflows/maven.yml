@@ -13,7 +13,9 @@ on:
     branches: [ "14-add-scoreboard-for-past-games" ]
   pull_request:
     branches: [ "14-add-scoreboard-for-past-games" ]
-
+permissions:
+  contents: read
+  security-events: write
 jobs:
   build:
 
