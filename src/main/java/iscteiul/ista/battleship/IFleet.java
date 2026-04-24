@@ -6,8 +6,8 @@ package iscteiul.ista.battleship;
 import java.util.List;
 
 public interface IFleet {
-    Integer BOARD_SIZE = 10;
-    Integer FLEET_SIZE = 10;
+    Integer BOARD_SIZE = 5;
+    Integer FLEET_SIZE = 2;
 
     List<IShip> getShips();
 

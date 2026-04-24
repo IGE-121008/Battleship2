@@ -1,0 +1,15 @@
+version: "1.0"
+
+profile:
+  name: qodana.recommended
+
+include:
+  - name: ClassTooLarge
+
+  # Other code smell here:
+  # - name: ClassTooLarge MethodLength
+  # - name: DuplicateCode
+
+failThreshold: 1
+
+projectJDK: "21"
