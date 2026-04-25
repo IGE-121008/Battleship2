@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Board</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">iscteiul.ista.battleship</a>
+</div>
+
+<h1>Coverage Summary for Class: Board (iscteiul.ista.battleship)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Board</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71,4%
+  </span>
+  <span class="absValue">
+    (5/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53,5%
+  </span>
+  <span class="absValue">
+    (23/43)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57,7%
+  </span>
+  <span class="absValue">
+    (30/52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package iscteiul.ista.battleship;
+&nbsp;
+&nbsp;public class Board {
+&nbsp;
+&nbsp;    private char[][] grid;          // Estado dos tiros (acertos, falhas, vazio)
+&nbsp;    private char[][] shipLayer;     // Letras dos navios
+&nbsp;    private static final char EMPTY = &#39;-&#39;;
+&nbsp;
+<b class="fc">&nbsp;    public Board() {</b>
+<b class="fc">&nbsp;        grid = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];</b>
+<b class="fc">&nbsp;        shipLayer = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];</b>
+<b class="fc">&nbsp;        clear();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Limpa o tabuleiro
+&nbsp;    public void clear() {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; Fleet.BOARD_SIZE; i++) {</b>
+<b class="fc">&nbsp;            for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+<b class="fc">&nbsp;                grid[i][j] = EMPTY;</b>
+<b class="fc">&nbsp;                shipLayer[i][j] = EMPTY;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Marca um tiro no tabuleiro
+&nbsp;    public void markShot(IPosition pos, boolean hit) {
+<b class="nc">&nbsp;        if (hit)</b>
+<b class="nc">&nbsp;            grid[pos.getRow()][pos.getColumn()] = &#39;X&#39;;</b>
+&nbsp;        else
+<b class="nc">&nbsp;            grid[pos.getRow()][pos.getColumn()] = &#39;o&#39;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Coloca a frota no tabuleiro usando letras específicas
+&nbsp;    public void placeFleet(IFleet fleet) {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; Fleet.BOARD_SIZE; i++) {</b>
+<b class="fc">&nbsp;            for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+<b class="pc">&nbsp;                if (grid[i][j] != &#39;X&#39; &amp;&amp; grid[i][j] != &#39;o&#39;) {</b>
+<b class="fc">&nbsp;                    grid[i][j] = &#39;-&#39;;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        for (IShip ship : fleet.getShips()) {</b>
+<b class="fc">&nbsp;            char symbol = getShipSymbol(ship);</b>
+<b class="fc">&nbsp;            for (IPosition pos : ship.getPositions()) {</b>
+<b class="pc">&nbsp;                if (grid[pos.getRow()][pos.getColumn()] != &#39;X&#39; &amp;&amp; grid[pos.getRow()][pos.getColumn()] != &#39;o&#39;) {</b>
+<b class="fc">&nbsp;                    grid[pos.getRow()][pos.getColumn()] = symbol;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Converte navio em letra
+&nbsp;    private char getShipSymbol(IShip ship) {
+<b class="pc">&nbsp;        switch (ship.getCategory().toLowerCase()) {</b>
+<b class="nc">&nbsp;            case &quot;caravel&quot;: return &#39;c&#39;;</b>
+<b class="nc">&nbsp;            case &quot;nau&quot;:     return &#39;C&#39;;</b>
+<b class="nc">&nbsp;            case &quot;frigate&quot;: return &#39;F&#39;;</b>
+<b class="fc">&nbsp;            case &quot;barca&quot;:   return &#39;B&#39;;</b>
+<b class="nc">&nbsp;            case &quot;galeao&quot;:  return &#39;G&#39;;</b>
+<b class="nc">&nbsp;            default: return &#39;#&#39;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // 🟦 NORMAL BOARD (your board)
+&nbsp;    public void printVisual() {
+<b class="fc">&nbsp;        System.out.print(&quot;  &quot;);</b>
+<b class="fc">&nbsp;        for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+<b class="fc">&nbsp;            System.out.print((j + 1) + &quot; &quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println();</b>
+<b class="fc">&nbsp;        System.out.println(&quot;****************************************&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; Fleet.BOARD_SIZE; i++) {</b>
+<b class="fc">&nbsp;            System.out.print((char)(&#39;A&#39; + i) + &quot; * &quot;);</b>
+<b class="fc">&nbsp;            for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+<b class="fc">&nbsp;                System.out.print(grid[i][j] + &quot; &quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            System.out.println(&quot;*&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;****************************************&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // 🟥 OPPONENT BOARD (YOUR TASK 🔥)
+&nbsp;    public void printOpponentBoard() {
+<b class="nc">&nbsp;        System.out.print(&quot;  &quot;);</b>
+<b class="nc">&nbsp;        for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+<b class="nc">&nbsp;            System.out.print((j + 1) + &quot; &quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        System.out.println();</b>
+<b class="nc">&nbsp;        System.out.println(&quot;****************************************&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int i = 0; i &lt; Fleet.BOARD_SIZE; i++) {</b>
+<b class="nc">&nbsp;            System.out.print((char)(&#39;A&#39; + i) + &quot; * &quot;);</b>
+<b class="nc">&nbsp;            for (int j = 0; j &lt; Fleet.BOARD_SIZE; j++) {</b>
+&nbsp;
+<b class="nc">&nbsp;                char c = grid[i][j];</b>
+&nbsp;
+&nbsp;                // 🔥 ONLY show known info
+<b class="nc">&nbsp;                if (c == &#39;X&#39; || c == &#39;o&#39;) {</b>
+<b class="nc">&nbsp;                    System.out.print(c + &quot; &quot;);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.print(&quot;- &quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            System.out.println(&quot;*&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;****************************************&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-04-25 20:01</div>
+</div>
+</body>
+</html>
