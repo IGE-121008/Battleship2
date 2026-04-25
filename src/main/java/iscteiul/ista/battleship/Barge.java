@@ -7,7 +7,7 @@ public class Barge extends Ship {
     private static final Integer SIZE = 1;
     private static final String NAME = "Barca";
 
-    /**   
+    /**
      * @param bearing - barge bearing
      * @param pos     - upper left position of the barge
      */
