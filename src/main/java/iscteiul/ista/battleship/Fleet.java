@@ -1,144 +1,98 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fleet implements IFleet {
-    /**
-     * This operation prints all the given ships
-     *
-     * @param ships The list of ships
-     */
-    static void printShips(List<IShip> ships) {
-        for (IShip ship : ships)
-            System.out.println(ship);
-    }
 
-    // -----------------------------------------------------
+    public static final int BOARD_SIZE = 10;
 
-    private List<IShip> ships;
+    private final List<IShip> ships;
+    private final Board board;
 
     public Fleet() {
-        ships = new ArrayList<>();
+        this.ships = new ArrayList<>();
+        this.board = new Board();
     }
 
-    @Override
     public List<IShip> getShips() {
         return ships;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see battleship.IFleet#addShip(battleship.IShip)
-     */
     @Override
-    public boolean addShip(IShip s) {
-        boolean result = false;
-        if ((ships.size() <= FLEET_SIZE) && (isInsideBoard(s)) && (!colisionRisk(s))) {
-            ships.add(s);
-            result = true;
+    public boolean addShip(IShip ship) {
+        if (ship == null) throw new NullPointerException("Ship cannot be null");
+
+        // 1. verificar limites + colisão real
+        for (IShip existing : ships) {
+            for (IPosition p1 : existing.getPositions()) {
+                for (IPosition p2 : ship.getPositions()) {
+
+                    // colisão REAL (mesma posição)
+                    if (p1.equals(p2)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // 2. verificar limites do tabuleiro
+        for (IPosition p : ship.getPositions()) {
+            if (p.getRow() < 0 || p.getRow() >= BOARD_SIZE ||
+                    p.getColumn() < 0 || p.getColumn() >= BOARD_SIZE) {
+                return false;
+            }
+        }
+
+        ships.add(ship);
+        board.placeFleet(this);
+        return true;
+    }
+
+    @Override
+    public IShip shipAt(IPosition pos) {
+        for (IShip ship : ships) {
+            if (ship.occupies(pos)) {
+                return ship;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<IShip> getFloatingShips() {
+        List<IShip> floating = new ArrayList<>();
+        for (IShip s : ships) {
+            if (s.stillFloating()) {
+                floating.add(s);
+            }
+        }
+        return floating;
+    }
+
+    @Override
+    public List<IShip> getShipsLike(String type) {
+        List<IShip> result = new ArrayList<>();
+        for (IShip s : ships) {
+            if (s.getCategory().equalsIgnoreCase(type)) {
+                result.add(s);
+            }
         }
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see battleship.IFleet#getShipsLike(java.lang.String)
-     */
-    @Override
-    public List<IShip> getShipsLike(String category) {
-        List<IShip> shipsLike = new ArrayList<>();
-        for (IShip s : ships)
-            if (s.getCategory().equals(category))
-                shipsLike.add(s);
-
-        return shipsLike;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see battleship.IFleet#getFloatingShips()
-     */
-    @Override
-    public List<IShip> getFloatingShips() {
-        List<IShip> floatingShips = new ArrayList<>();
-        for (IShip s : ships)
-            if (s.stillFloating())
-                floatingShips.add(s);
-
-        return floatingShips;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see battleship.IFleet#shipAt(battleship.IPosition)
-     */
-    @Override
-    public IShip shipAt(IPosition pos) {
-        for (int i = 0; i < ships.size(); i++)
-            if (ships.get(i).occupies(pos))
-                return ships.get(i);
-        return null;
-    }
-
-    private boolean isInsideBoard(IShip s) {
-        return (s.getLeftMostPos() >= 0 && s.getRightMostPos() <= BOARD_SIZE - 1 && s.getTopMostPos() >= 0
-                && s.getBottomMostPos() <= BOARD_SIZE - 1);
-    }
-
-    private boolean colisionRisk(IShip s) {
-        for (int i = 0; i < ships.size(); i++) {
-            if (ships.get(i).tooCloseTo(s))
-                return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * This operation shows the state of a fleet
-     */
     public void printStatus() {
-        printAllShips();
-        printFloatingShips();
-        printShipsByCategory("Galeao");
-        printShipsByCategory("Fragata");
-        printShipsByCategory("Nau");
-        printShipsByCategory("Caravela");
-        printShipsByCategory("Barca");
+        board.printVisual();
     }
 
-    /**
-     * This operation prints all the ships of a fleet belonging to a particular
-     * category
-     *
-     * @param category The category of ships of interest
-     */
-    public void printShipsByCategory(String category) {
-        assert category != null;
-
-        printShips(getShipsLike(category));
+    public void printAllShips() {
+        board.placeFleet(this);
+        board.printVisual();
     }
 
-    /**
-     * This operation prints all the ships of a fleet but not yet shot
-     */
     public void printFloatingShips() {
-        printShips(getFloatingShips());
+        for (IShip s : getFloatingShips()) {
+            System.out.println(s);
+        }
     }
-
-    /**
-     * This operation prints all the ships of a fleet
-     */
-    void printAllShips() {
-        printShips(ships);
-    }
-
 }
