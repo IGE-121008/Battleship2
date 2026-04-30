@@ -10,4 +10,9 @@
 | Tasks::taskE | Complex Conditional | Decompose Conditional | 110002 |
 | Tasks::taskE | Long Method | Extract Method playTurn | 110002 |
 | Tasks::taskE | Long Method | Extract Method checkWinner | 110002 |
+| Board::printVisual | Duplicated Code | Extract Method printHeader | 108419 |
+| Board::printVisual | Duplicated Code | Extract Method printRow | 108419 |
+| Board::printVisual | Duplicated Code | Introduce Constant BORDER | 108419 |
+| Board::printOpponentBoard | Complex Conditional | Extract Method isVisibleCell | 108419 |
+| Board::printOpponentBoard | Duplicated Code | Extract Method printHeader | 108419 |
 
