@@ -15,4 +15,9 @@
 | Board::printVisual | Duplicated Code | Introduce Constant BORDER | 108419 |
 | Board::printOpponentBoard | Complex Conditional | Extract Method isVisibleCell | 108419 |
 | Board::printOpponentBoard | Duplicated Code | Extract Method printHeader | 108419 |
+| Game::fire | Long Method | Extract Method validateShot | 110772 |
+| Game::fire | Long Method | Extract Method handleHit | 110772 |
+| Game::fire | Long Method | Extract Method handleMiss | 110772 |
+| Game::fire | Complex Conditional | Decompose Conditional | 110772 |
+| Game::fire | Multiple Responsibilities | Extract Method updateStats | 110772 |
 
