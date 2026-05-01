@@ -62,13 +62,7 @@ public class Tasks {
 
                             printBoards(current, opponent);
 
-                            if (current == player1) {
-                                System.out.println("=== Jogador 1, é a sua vez! ===");
-                                System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
-                            } else {
-                                System.out.println("=== Jogador 2, é a sua vez! ===");
-                                System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
-                            }
+                            extracted(current, player1);
                             firingRound(in, opponent);
 
                             System.out.println(
@@ -116,6 +110,16 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void extracted(Game current, Game player1) {
+        if (current == player1) {
+            System.out.println("=== Jogador 1, é a sua vez! ===");
+            System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
+        } else {
+            System.out.println("=== Jogador 2, é a sua vez! ===");
+            System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
+        }
     }
 
     private static void printTaskDTurnHeader(Game current, Game player1) {
