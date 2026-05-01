@@ -19,7 +19,7 @@ class FleetTest {
 
         @Test
         void addSingleShip() {
-            Ship s = Ship.buildShip("barca", Compass.NORTH, new Position(1, 1));
+            Ship s = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(1, 1));
 
             assertTrue(fleet.addShip(s));
             assertEquals(1, fleet.getShips().size());
@@ -27,8 +27,8 @@ class FleetTest {
 
         @Test
         void preventOverlap() {
-            Ship s1 = Ship.buildShip("barca", Compass.NORTH, new Position(2, 2));
-            Ship s2 = Ship.buildShip("barca", Compass.NORTH, new Position(2, 2));
+            Ship s1 = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(2, 2));
+            Ship s2 = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(2, 2));
 
             assertTrue(fleet.addShip(s1));
             assertFalse(fleet.addShip(s2));
@@ -36,8 +36,8 @@ class FleetTest {
 
         @Test
         void allowDifferentPositions() {
-            Ship s1 = Ship.buildShip("barca", Compass.NORTH, new Position(0, 0));
-            Ship s2 = Ship.buildShip("barca", Compass.NORTH, new Position(5, 5));
+            Ship s1 = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(0, 0));
+            Ship s2 = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(5, 5));
 
             assertTrue(fleet.addShip(s1));
             assertTrue(fleet.addShip(s2));
@@ -47,7 +47,7 @@ class FleetTest {
 
         @Test
         void rejectOutOfBounds() {
-            Ship s = Ship.buildShip("galeao", Compass.SOUTH, new Position(9, 9));
+            Ship s = Ship.buildShip(ShipType.GALEAO, Compass.SOUTH, new Position(9, 9));
 
             assertFalse(fleet.addShip(s));
         }
@@ -58,7 +58,7 @@ class FleetTest {
 
         @Test
         void shipAtExists() {
-            Ship s = Ship.buildShip("barca", Compass.NORTH, new Position(3, 3));
+            Ship s = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(3, 3));
             fleet.addShip(s);
 
             IShip found = fleet.shipAt(new Position(3, 3));
@@ -74,7 +74,7 @@ class FleetTest {
 
         @Test
         void getShipsLikeCaseInsensitive() {
-            fleet.addShip(Ship.buildShip("barca", Compass.NORTH, new Position(0, 0)));
+            fleet.addShip(Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(0, 0)));
 
             List<IShip> result = fleet.getShipsLike("BARCA");
 
@@ -87,7 +87,7 @@ class FleetTest {
 
         @Test
         void shipStartsFloating() {
-            Ship s = Ship.buildShip("barca", Compass.NORTH, new Position(1, 1));
+            Ship s = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(1, 1));
             fleet.addShip(s);
 
             assertTrue(s.stillFloating());
@@ -95,7 +95,7 @@ class FleetTest {
 
         @Test
         void shipSinksAfterHits() {
-            Ship s = Ship.buildShip("barca", Compass.NORTH, new Position(1, 1));
+            Ship s = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(1, 1));
             fleet.addShip(s);
 
             for (IPosition p : s.getPositions()) {
@@ -112,7 +112,7 @@ class FleetTest {
 
         @Test
         void printsDoNotCrash() {
-            fleet.addShip(Ship.buildShip("barca", Compass.NORTH, new Position(1, 1)));
+            fleet.addShip(Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(1, 1)));
 
             assertDoesNotThrow(() -> {
                 fleet.printStatus();

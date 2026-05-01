@@ -23,30 +23,28 @@ public class Fleet implements IFleet {
     public boolean addShip(IShip ship) {
         if (ship == null) throw new NullPointerException("Ship cannot be null");
 
-        // 1. verificar limites + colisão real
-        for (IShip existing : ships) {
-            for (IPosition p1 : existing.getPositions()) {
-                for (IPosition p2 : ship.getPositions()) {
-
-                    // colisão REAL (mesma posição)
-                    if (p1.equals(p2)) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        // 2. verificar limites do tabuleiro
-        for (IPosition p : ship.getPositions()) {
-            if (p.getRow() < 0 || p.getRow() >= BOARD_SIZE ||
-                    p.getColumn() < 0 || p.getColumn() >= BOARD_SIZE) {
-                return false;
-            }
+        if (hasCollision(ship) || !isWithinBoardLimits(ship)) {
+            return false;
         }
 
         ships.add(ship);
         board.placeFleet(this);
         return true;
+    }
+
+    private boolean hasCollision(IShip ship) {
+        for (IShip existing : ships) {
+            if (existing.collidesWith(ship)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isWithinBoardLimits(IShip ship) {
+        return ship.getPositions().stream()
+                .allMatch(p -> p.getRow() >= 0 && p.getRow() < BOARD_SIZE &&
+                              p.getColumn() >= 0 && p.getColumn() < BOARD_SIZE);
     }
 
     @Override
@@ -61,24 +59,12 @@ public class Fleet implements IFleet {
 
     @Override
     public List<IShip> getFloatingShips() {
-        List<IShip> floating = new ArrayList<>();
-        for (IShip s : ships) {
-            if (s.stillFloating()) {
-                floating.add(s);
-            }
-        }
-        return floating;
+        return ships.stream().filter(IShip::stillFloating).toList();
     }
 
     @Override
     public List<IShip> getShipsLike(String type) {
-        List<IShip> result = new ArrayList<>();
-        for (IShip s : ships) {
-            if (s.getCategory().equalsIgnoreCase(type)) {
-                result.add(s);
-            }
-        }
-        return result;
+        return ships.stream().filter(s -> s.getCategory().equalsIgnoreCase(type)).toList();
     }
 
     public void printStatus() {
@@ -86,7 +72,6 @@ public class Fleet implements IFleet {
     }
 
     public void printAllShips() {
-        board.placeFleet(this);
         board.printVisual();
     }
 
