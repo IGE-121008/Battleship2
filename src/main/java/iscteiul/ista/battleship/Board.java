@@ -63,7 +63,7 @@ public class Board {
         }
     }
 
-    // ✅ NORMAL BOARD
+    // NORMAL BOARD
     public void printVisual() {
         printHeader();
 
@@ -74,7 +74,7 @@ public class Board {
         printSeparator();
     }
 
-    // ✅ EXTRACTED METHOD (your refactor)
+    // EXTRACTED METHOD
     private void printRow(int i) {
         System.out.print((char)('A' + i) + " * ");
         for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
@@ -87,17 +87,15 @@ public class Board {
         System.out.println(BORDER);
     }
 
-    // OPPONENT BOARD (YOUR TASK )
+    // OPPONENT BOARD
     public void printOpponentBoard() {
         printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
             System.out.print((char)('A' + i) + " * ");
             for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-
                 char c = grid[i][j];
 
-                // 🔥 ONLY show known info
                 if (c == 'X' || c == 'o') {
                     System.out.print(c + " ");
                 } else {
@@ -118,5 +116,4 @@ public class Board {
         System.out.println();
         printSeparator();
     }
-
 }
