@@ -9,21 +9,18 @@ import java.util.List;
 
 public abstract class Ship implements IShip {
 
-    private static final String GALEAO = "galeao";
-    private static final String FRAGATA = "fragata";
-    private static final String NAU = "nau";
-    private static final String CARAVELA = "caravela";
-    private static final String BARCA = "barca";
-
     /**
-     * @param shipKind
+     * @param shipType
      * @param bearing
      * @param pos
      * @return
      */
-    static Ship buildShip(String shipKind, Compass bearing, Position pos) {
+    static Ship buildShip(ShipType shipType, Compass bearing, Position pos) {
+        if (shipType == null) {
+            return null;
+        }
         Ship s;
-        switch (shipKind) {
+        switch (shipType) {
             case BARCA:
                 s = new Barge(bearing, pos);
                 break;
@@ -49,7 +46,7 @@ public abstract class Ship implements IShip {
     private String category;
     private Compass bearing;
     private IPosition pos;
-    protected List<IPosition> positions;
+    private List<IPosition> positions;
 
 
     /**
@@ -111,10 +108,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean stillFloating() {
-        for (int i = 0; i < getSize(); i++)
-            if (!getPositions().get(i).isHit())
-                return true;
-        return false;
+        return getPositions().stream().anyMatch(p -> !p.isHit());
     }
 
     /*
@@ -124,11 +118,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getTopMostPos() {
-        int top = getPositions().get(0).getRow();
-        for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getRow() < top)
-                top = getPositions().get(i).getRow();
-        return top;
+        return getPositions().stream().mapToInt(IPosition::getRow).min().orElse(0);
     }
 
     /*
@@ -138,11 +128,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getBottomMostPos() {
-        int bottom = getPositions().get(0).getRow();
-        for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getRow() > bottom)
-                bottom = getPositions().get(i).getRow();
-        return bottom;
+        return getPositions().stream().mapToInt(IPosition::getRow).max().orElse(0);
     }
 
     /*
@@ -152,11 +138,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getLeftMostPos() {
-        int left = getPositions().get(0).getColumn();
-        for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getColumn() < left)
-                left = getPositions().get(i).getColumn();
-        return left;
+        return getPositions().stream().mapToInt(IPosition::getColumn).min().orElse(0);
     }
 
     /*
@@ -166,11 +148,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getRightMostPos() {
-        int right = getPositions().get(0).getColumn();
-        for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getColumn() > right)
-                right = getPositions().get(i).getColumn();
-        return right;
+        return getPositions().stream().mapToInt(IPosition::getColumn).max().orElse(0);
     }
 
     /*
@@ -182,10 +160,7 @@ public abstract class Ship implements IShip {
     public boolean occupies(IPosition pos) {
         assert pos != null;
 
-        for (int i = 0; i < getSize(); i++)
-            if (getPositions().get(i).equals(pos))
-                return true;
-        return false;
+        return getPositions().stream().anyMatch(p -> p.equals(pos));
     }
 
     /*
@@ -212,10 +187,18 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean tooCloseTo(IPosition pos) {
-        for (int i = 0; i < this.getSize(); i++)
-            if (getPositions().get(i).isAdjacentTo(pos))
-                return true;
-        return false;
+        return getPositions().stream().anyMatch(p -> p.isAdjacentTo(pos));
+    }
+
+    /**
+     * Checks if this ship collides with another ship (occupies the same positions).
+     * @param other the other ship
+     * @return true if they collide, false otherwise
+     */
+    @Override
+    public boolean collidesWith(IShip other) {
+        if (other == null) return false;
+        return getPositions().stream().anyMatch(p -> other.occupies(p));
     }
 
 

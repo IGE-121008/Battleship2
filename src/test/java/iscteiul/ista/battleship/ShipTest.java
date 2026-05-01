@@ -15,7 +15,7 @@ class ShipTest {
     void setUp() {
         // Usamos uma Fragata para ter várias posições e testar ciclos
         pos = new Position(2, 2);
-        ship = Ship.buildShip("fragata", Compass.NORTH, (Position) pos);
+        ship = Ship.buildShip(ShipType.FRAGATA, Compass.NORTH, (Position) pos);
     }
 
     @Nested
@@ -27,7 +27,7 @@ class ShipTest {
         @ValueSource(strings = {"Barca", "Caravela", "Nau", "Fragata", "Galeao", "invalido"})
         void testBuildShipBranches(String type) {
             // O buildShip espera minúsculas, por isso usamos toLowerCase()
-            Ship s = Ship.buildShip(type.toLowerCase(), Compass.NORTH, new Position(0, 0));
+            Ship s = Ship.buildShip(ShipType.fromString(type.toLowerCase()), Compass.NORTH, new Position(0, 0));
 
             if (type.equals("invalido")) {
                 assertNull(s, "O ramo default deve retornar null");
@@ -119,8 +119,8 @@ class ShipTest {
         @Test
         @DisplayName("tooCloseTo (IShip): Testar ramos de colisão entre barcos")
         void testTooCloseToShip() {
-            Ship otherClose = Ship.buildShip("barca", Compass.NORTH, new Position(2, 3));
-            Ship otherFar = Ship.buildShip("barca", Compass.NORTH, new Position(8, 8));
+            Ship otherClose = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(2, 3));
+            Ship otherFar = Ship.buildShip(ShipType.BARCA, Compass.NORTH, new Position(8, 8));
 
             assertTrue(ship.tooCloseTo(otherClose), "Deve detectar que outro barco está perto");
             assertFalse(ship.tooCloseTo(otherFar), "Não deve detectar colisão com barco longe");

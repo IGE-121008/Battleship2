@@ -167,7 +167,7 @@ public class Tasks {
         Position pos = readPosition(in);
         char c = in.next().charAt(0);
         Compass bearing = Compass.charToCompass(c);
-        return Ship.buildShip(shipKind, bearing, pos);
+        return Ship.buildShip(ShipType.fromString(shipKind), bearing, pos);
     }
 
     static Position readPosition(Scanner in) {
