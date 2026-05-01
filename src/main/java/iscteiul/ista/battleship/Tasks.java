@@ -197,7 +197,7 @@ public class Tasks {
         }
     }
 
-    // ✅ FIXED taskE (Extract Method playTurn)
+    //  FIXED taskE (Extract Method playTurn)
     public static void taskE() {
         Scanner in = new Scanner(System.in);
 
@@ -221,7 +221,7 @@ public class Tasks {
         }
     }
 
-    // ✅ NEW METHOD
+    // NEW METHOD
     private static boolean playTurn(Scanner in, Game game1, Game game2, boolean player1Turn) {
         printTurnHeader(player1Turn);
 
@@ -234,7 +234,7 @@ public class Tasks {
 
             firingRound(in, game1);
 
-            return checkWinner(game1);
+            return checkWinner(game1, true);
         }
 
         System.out.println("=== PLAYER 2 BOARD ===");
@@ -245,12 +245,16 @@ public class Tasks {
 
         firingRound(in, game2);
 
-        return checkWinner(game2);
+        return checkWinner(game2, false);
     }
 
-    private static boolean checkWinner(Game game) {
+    private static boolean checkWinner(Game game, boolean isPlayer1) {
         if (isGameOver(game)) {
-            System.out.println("PLAYER 1 WINS!");
+            if (isPlayer1) {
+                System.out.println("PLAYER 1 WINS!");
+            } else {
+                System.out.println("PLAYER 2 WINS!");
+            }
             return true;
         }
         return false;
