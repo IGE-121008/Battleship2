@@ -5,6 +5,7 @@ public class Board {
     private char[][] grid;          // Estado dos tiros (acertos, falhas, vazio)
     private char[][] shipLayer;     // Letras dos navios
     private static final char EMPTY = '-';
+    private static final String BORDER = "****************************************";
 
     public Board() {
         grid = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];
@@ -62,32 +63,39 @@ public class Board {
         }
     }
 
-    //  NORMAL BOARD (your board)
+    // NORMAL BOARD
     public void printVisual() {
         printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
-            System.out.print((char)('A' + i) + " * ");
-            for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-                System.out.print(grid[i][j] + " ");
-            }
-            System.out.println("*");
+            printRow(i);
         }
 
-        System.out.println("****************************************");
+        printSeparator();
     }
 
-    // OPPONENT BOARD (YOUR TASK )
+    // EXTRACTED METHOD
+    private void printRow(int i) {
+        System.out.print((char)('A' + i) + " * ");
+        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+            System.out.print(grid[i][j] + " ");
+        }
+        System.out.println("*");
+    }
+
+    private static void printSeparator() {
+        System.out.println(BORDER);
+    }
+
+    // OPPONENT BOARD
     public void printOpponentBoard() {
         printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
             System.out.print((char)('A' + i) + " * ");
             for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-
                 char c = grid[i][j];
 
-                // 🔥 ONLY show known info
                 if (c == 'X' || c == 'o') {
                     System.out.print(c + " ");
                 } else {
@@ -97,7 +105,7 @@ public class Board {
             System.out.println("*");
         }
 
-        System.out.println("****************************************");
+        printSeparator();
     }
 
     private static void printHeader() {
@@ -106,6 +114,6 @@ public class Board {
             System.out.print((j + 1) + " ");
         }
         System.out.println();
-        System.out.println("****************************************");
+        printSeparator();
     }
 }

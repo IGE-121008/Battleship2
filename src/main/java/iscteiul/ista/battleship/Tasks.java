@@ -52,49 +52,30 @@ public class Tasks {
                         current.printFleet();
                     break;
 
-                // FIXED GAME LOOP + TURN MESSAGE
                 case RAJADA:
                     if (current != null && opponent != null) {
 
                         while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
-                            if (current == player1) {
-                                System.out.println("\n Player 1, your turn!");
-                                System.out.println("===== PLAYER 1 TURN =====");
-                            } else {
-                                System.out.println("\n Player 2, your turn!");
-                                System.out.println("===== PLAYER 2 TURN =====");
-                            }
+                            printTaskDTurnHeader(current, player1);
 
                             printBoards(current, opponent);
 
-                            if (current == player1) {
-                                System.out.println("=== Jogador 1, é a sua vez! ===");
-                                System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
-                            } else {
-                                System.out.println("=== Jogador 2, é a sua vez! ===");
-                                System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
-                            }
+                            printShotInstructions(current, player1);
                             firingRound(in, opponent);
 
-                            System.out.println(
-                                    "Hits: " + opponent.getHits()
-                                            + " Inv: " + opponent.getInvalidShots()
-                                            + " Rep: " + opponent.getRepeatedShots()
-                                            + " Restam " + opponent.getRemainingShips() + " navios.");
+                            printRoundStats(opponent);
 
                             if (isGameOver(opponent)) {
                                 System.out.println("Maldito sejas, Java Sparrow...");
                                 break;
                             }
 
-                            //  SWITCH PLAYERS
                             Game temp = current;
                             current = opponent;
                             opponent = temp;
                         }
 
-                        // SHOW BOARDS AT THE END
                         System.out.println("===== PLAYER 1 VIEW =====");
                         player1.getBoard().printOpponentBoard();
 
@@ -122,6 +103,34 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void printRoundStats(Game opponent) {
+        System.out.println(
+                "Hits: " + opponent.getHits()
+                        + " Inv: " + opponent.getInvalidShots()
+                        + " Rep: " + opponent.getRepeatedShots()
+                        + " Restam " + opponent.getRemainingShips() + " navios.");
+    }
+
+    private static void printShotInstructions(Game current, Game player1) {
+        if (current == player1) {
+            System.out.println("=== Jogador 1, é a sua vez! ===");
+            System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
+        } else {
+            System.out.println("=== Jogador 2, é a sua vez! ===");
+            System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
+        }
+    }
+
+    private static void printTaskDTurnHeader(Game current, Game player1) {
+        if (current == player1) {
+            System.out.println("\n Player 1, your turn!");
+            System.out.println("===== PLAYER 1 TURN =====");
+        } else {
+            System.out.println("\n Player 2, your turn!");
+            System.out.println("===== PLAYER 2 TURN =====");
+        }
     }
 
     private static void printBoards(Game current, Game opponent) {
@@ -188,6 +197,7 @@ public class Tasks {
         }
     }
 
+    // ✅ FIXED taskE (Extract Method playTurn)
     public static void taskE() {
         Scanner in = new Scanner(System.in);
 
@@ -203,38 +213,39 @@ public class Tasks {
         boolean player1Turn = true;
 
         while (true) {
+            boolean gameEnded = playTurn(in, game1, game2, player1Turn);
 
-            printTurnHeader(player1Turn);
-
-            if (player1Turn) {
-
-                System.out.println("=== PLAYER 1 BOARD ===");
-                game2.getBoard().printVisual();
-
-                System.out.println("=== PLAYER 2 BOARD (KNOWN) ===");
-                game1.getBoard().printOpponentBoard();
-
-                firingRound(in, game1);
-
-                if (checkWinner(game1)) break;
-
-            } else {
-
-                System.out.println("=== PLAYER 2 BOARD ===");
-                game1.getBoard().printVisual();
-
-                System.out.println("=== PLAYER 1 BOARD (KNOWN) ===");
-                game2.getBoard().printOpponentBoard();
-
-                firingRound(in, game2);
-
-                if (checkWinner(game2)) {
-                    break;
-                }
-            }
+            if (gameEnded) break;
 
             player1Turn = !player1Turn;
         }
+    }
+
+    // ✅ NEW METHOD
+    private static boolean playTurn(Scanner in, Game game1, Game game2, boolean player1Turn) {
+        printTurnHeader(player1Turn);
+
+        if (player1Turn) {
+            System.out.println("=== PLAYER 1 BOARD ===");
+            game2.getBoard().printVisual();
+
+            System.out.println("=== PLAYER 2 BOARD (KNOWN) ===");
+            game1.getBoard().printOpponentBoard();
+
+            firingRound(in, game1);
+
+            return checkWinner(game1);
+        }
+
+        System.out.println("=== PLAYER 2 BOARD ===");
+        game1.getBoard().printVisual();
+
+        System.out.println("=== PLAYER 1 BOARD (KNOWN) ===");
+        game2.getBoard().printOpponentBoard();
+
+        firingRound(in, game2);
+
+        return checkWinner(game2);
     }
 
     private static boolean checkWinner(Game game) {
