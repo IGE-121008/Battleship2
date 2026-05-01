@@ -5,6 +5,7 @@ public class Board {
     private char[][] grid;          // Estado dos tiros (acertos, falhas, vazio)
     private char[][] shipLayer;     // Letras dos navios
     private static final char EMPTY = '-';
+    private static final String BORDER = "****************************************";
 
     public Board() {
         grid = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];
@@ -78,7 +79,7 @@ public class Board {
     }
 
     private static void printSeparator() {
-        System.out.println("****************************************");
+        System.out.println(BORDER);
     }
 
     // OPPONENT BOARD (YOUR TASK )
