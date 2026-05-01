@@ -52,7 +52,6 @@ public class Tasks {
                         current.printFleet();
                     break;
 
-                // FIXED GAME LOOP + TURN MESSAGE
                 case RAJADA:
                     if (current != null && opponent != null) {
 
@@ -72,13 +71,11 @@ public class Tasks {
                                 break;
                             }
 
-                            //  SWITCH PLAYERS
                             Game temp = current;
                             current = opponent;
                             opponent = temp;
                         }
 
-                        // SHOW BOARDS AT THE END
                         System.out.println("===== PLAYER 1 VIEW =====");
                         player1.getBoard().printOpponentBoard();
 
@@ -200,6 +197,7 @@ public class Tasks {
         }
     }
 
+    // ✅ FIXED taskE (Extract Method playTurn)
     public static void taskE() {
         Scanner in = new Scanner(System.in);
 
@@ -215,38 +213,39 @@ public class Tasks {
         boolean player1Turn = true;
 
         while (true) {
+            boolean gameEnded = playTurn(in, game1, game2, player1Turn);
 
-            printTurnHeader(player1Turn);
-
-            if (player1Turn) {
-
-                System.out.println("=== PLAYER 1 BOARD ===");
-                game2.getBoard().printVisual();
-
-                System.out.println("=== PLAYER 2 BOARD (KNOWN) ===");
-                game1.getBoard().printOpponentBoard();
-
-                firingRound(in, game1);
-
-                if (checkWinner(game1)) break;
-
-            } else {
-
-                System.out.println("=== PLAYER 2 BOARD ===");
-                game1.getBoard().printVisual();
-
-                System.out.println("=== PLAYER 1 BOARD (KNOWN) ===");
-                game2.getBoard().printOpponentBoard();
-
-                firingRound(in, game2);
-
-                if (checkWinner(game2)) {
-                    break;
-                }
-            }
+            if (gameEnded) break;
 
             player1Turn = !player1Turn;
         }
+    }
+
+    // ✅ NEW METHOD
+    private static boolean playTurn(Scanner in, Game game1, Game game2, boolean player1Turn) {
+        printTurnHeader(player1Turn);
+
+        if (player1Turn) {
+            System.out.println("=== PLAYER 1 BOARD ===");
+            game2.getBoard().printVisual();
+
+            System.out.println("=== PLAYER 2 BOARD (KNOWN) ===");
+            game1.getBoard().printOpponentBoard();
+
+            firingRound(in, game1);
+
+            return checkWinner(game1);
+        }
+
+        System.out.println("=== PLAYER 2 BOARD ===");
+        game1.getBoard().printVisual();
+
+        System.out.println("=== PLAYER 1 BOARD (KNOWN) ===");
+        game2.getBoard().printOpponentBoard();
+
+        firingRound(in, game2);
+
+        return checkWinner(game2);
     }
 
     private static boolean checkWinner(Game game) {
