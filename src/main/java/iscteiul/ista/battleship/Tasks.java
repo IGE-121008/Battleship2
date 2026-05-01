@@ -216,10 +216,7 @@ public class Tasks {
 
                 firingRound(in, game1);
 
-                if (isGameOver(game1)) {
-                    System.out.println("PLAYER 1 WINS!");
-                    break;
-                }
+                if (checkWinner(game1)) break;
 
             } else {
 
@@ -231,14 +228,21 @@ public class Tasks {
 
                 firingRound(in, game2);
 
-                if (isGameOver(game2)) {
-                    System.out.println("PLAYER 2 WINS!");
+                if (checkWinner(game2)) {
                     break;
                 }
             }
 
             player1Turn = !player1Turn;
         }
+    }
+
+    private static boolean checkWinner(Game game) {
+        if (isGameOver(game)) {
+            System.out.println("PLAYER 1 WINS!");
+            return true;
+        }
+        return false;
     }
 
     private static boolean isGameOver(Game game) {
