@@ -199,11 +199,7 @@ public class Tasks {
 
         while (true) {
 
-            if (player1Turn) {
-                System.out.println("----- PLAYER 1 TURN -----");
-            } else {
-                System.out.println("----- PLAYER 2 TURN -----");
-            }
+            printTurnHeader(player1Turn);
 
             if (player1Turn) {
 
@@ -237,6 +233,14 @@ public class Tasks {
             }
 
             player1Turn = !player1Turn;
+        }
+    }
+
+    private static void printTurnHeader(boolean player1Turn) {
+        if (player1Turn) {
+            System.out.println("----- PLAYER 1 TURN -----");
+        } else {
+            System.out.println("----- PLAYER 2 TURN -----");
         }
     }
 }
