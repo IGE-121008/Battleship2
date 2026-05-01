@@ -52,25 +52,22 @@ public class Tasks {
                         current.printFleet();
                     break;
 
-                // ✅ FIXED GAME LOOP + TURN MESSAGE
+                // FIXED GAME LOOP + TURN MESSAGE
                 case RAJADA:
                     if (current != null && opponent != null) {
 
                         while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
                             if (current == player1) {
-                                System.out.println("\n👉 Player 1, your turn!");
+                                System.out.println("\n Player 1, your turn!");
                                 System.out.println("===== PLAYER 1 TURN =====");
                             } else {
-                                System.out.println("\n👉 Player 2, your turn!");
+                                System.out.println("\n Player 2, your turn!");
                                 System.out.println("===== PLAYER 2 TURN =====");
                             }
 
-                            System.out.println("Seu tabuleiro:");
-                            current.getBoard().printVisual();
+                            printBoards(current, opponent);
 
-                            System.out.println("Tabuleiro do adversário:");
-                            opponent.getBoard().printOpponentBoard();
                             if (current == player1) {
                                 System.out.println("=== Jogador 1, é a sua vez! ===");
                                 System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
@@ -125,6 +122,14 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void printBoards(Game current, Game opponent) {
+        System.out.println("Seu tabuleiro:");
+        current.getBoard().printVisual();
+
+        System.out.println("Tabuleiro do adversário:");
+        opponent.getBoard().printOpponentBoard();
     }
 
     static Fleet buildFleet(Scanner in) {
