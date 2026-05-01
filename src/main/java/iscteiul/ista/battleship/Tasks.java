@@ -58,13 +58,7 @@ public class Tasks {
 
                         while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
-                            if (current == player1) {
-                                System.out.println("\n Player 1, your turn!");
-                                System.out.println("===== PLAYER 1 TURN =====");
-                            } else {
-                                System.out.println("\n Player 2, your turn!");
-                                System.out.println("===== PLAYER 2 TURN =====");
-                            }
+                            printTaskDTurnHeader(current, player1);
 
                             printBoards(current, opponent);
 
@@ -122,6 +116,16 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void printTaskDTurnHeader(Game current, Game player1) {
+        if (current == player1) {
+            System.out.println("\n Player 1, your turn!");
+            System.out.println("===== PLAYER 1 TURN =====");
+        } else {
+            System.out.println("\n Player 2, your turn!");
+            System.out.println("===== PLAYER 2 TURN =====");
+        }
     }
 
     private static void printBoards(Game current, Game opponent) {
