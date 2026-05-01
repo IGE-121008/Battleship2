@@ -74,6 +74,10 @@ public class Board {
             System.out.println("*");
         }
 
+        printSeparator();
+    }
+
+    private static void printSeparator() {
         System.out.println("****************************************");
     }
 
@@ -97,7 +101,7 @@ public class Board {
             System.out.println("*");
         }
 
-        System.out.println("****************************************");
+        printSeparator();
     }
 
     private static void printHeader() {
@@ -106,6 +110,6 @@ public class Board {
             System.out.print((j + 1) + " ");
         }
         System.out.println();
-        System.out.println("****************************************");
+        printSeparator();
     }
 }
