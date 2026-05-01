@@ -52,25 +52,22 @@ public class Tasks {
                         current.printFleet();
                     break;
 
-                // ✅ FIXED GAME LOOP + TURN MESSAGE
+                // FIXED GAME LOOP + TURN MESSAGE
                 case RAJADA:
                     if (current != null && opponent != null) {
 
                         while (player1.getRemainingShips() > 0 && player2.getRemainingShips() > 0) {
 
                             if (current == player1) {
-                                System.out.println("\n👉 Player 1, your turn!");
+                                System.out.println("\n Player 1, your turn!");
                                 System.out.println("===== PLAYER 1 TURN =====");
                             } else {
-                                System.out.println("\n👉 Player 2, your turn!");
+                                System.out.println("\n Player 2, your turn!");
                                 System.out.println("===== PLAYER 2 TURN =====");
                             }
 
-                            System.out.println("Seu tabuleiro:");
-                            current.getBoard().printVisual();
+                            printBoards(current, opponent);
 
-                            System.out.println("Tabuleiro do adversário:");
-                            opponent.getBoard().printOpponentBoard();
                             if (current == player1) {
                                 System.out.println("=== Jogador 1, é a sua vez! ===");
                                 System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
@@ -86,7 +83,7 @@ public class Tasks {
                                             + " Rep: " + opponent.getRepeatedShots()
                                             + " Restam " + opponent.getRemainingShips() + " navios.");
 
-                            if (opponent.getRemainingShips() == 0) {
+                            if (isGameOver(opponent)) {
                                 System.out.println("Maldito sejas, Java Sparrow...");
                                 break;
                             }
@@ -125,6 +122,14 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void printBoards(Game current, Game opponent) {
+        System.out.println("Seu tabuleiro:");
+        current.getBoard().printVisual();
+
+        System.out.println("Tabuleiro do adversário:");
+        opponent.getBoard().printOpponentBoard();
     }
 
     static Fleet buildFleet(Scanner in) {
@@ -199,11 +204,7 @@ public class Tasks {
 
         while (true) {
 
-            if (player1Turn) {
-                System.out.println("----- PLAYER 1 TURN -----");
-            } else {
-                System.out.println("----- PLAYER 2 TURN -----");
-            }
+            printTurnHeader(player1Turn);
 
             if (player1Turn) {
 
@@ -215,10 +216,7 @@ public class Tasks {
 
                 firingRound(in, game1);
 
-                if (game1.getRemainingShips() == 0) {
-                    System.out.println("PLAYER 1 WINS!");
-                    break;
-                }
+                if (checkWinner(game1)) break;
 
             } else {
 
@@ -230,13 +228,32 @@ public class Tasks {
 
                 firingRound(in, game2);
 
-                if (game2.getRemainingShips() == 0) {
-                    System.out.println("PLAYER 2 WINS!");
+                if (checkWinner(game2)) {
                     break;
                 }
             }
 
             player1Turn = !player1Turn;
+        }
+    }
+
+    private static boolean checkWinner(Game game) {
+        if (isGameOver(game)) {
+            System.out.println("PLAYER 1 WINS!");
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isGameOver(Game game) {
+        return game.getRemainingShips() == 0;
+    }
+
+    private static void printTurnHeader(boolean player1Turn) {
+        if (player1Turn) {
+            System.out.println("----- PLAYER 1 TURN -----");
+        } else {
+            System.out.println("----- PLAYER 2 TURN -----");
         }
     }
 }

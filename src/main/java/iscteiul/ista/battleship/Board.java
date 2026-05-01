@@ -62,14 +62,9 @@ public class Board {
         }
     }
 
-    // 🟦 NORMAL BOARD (your board)
+    //  NORMAL BOARD (your board)
     public void printVisual() {
-        System.out.print("  ");
-        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-            System.out.print((j + 1) + " ");
-        }
-        System.out.println();
-        System.out.println("****************************************");
+        printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
             System.out.print((char)('A' + i) + " * ");
@@ -82,14 +77,9 @@ public class Board {
         System.out.println("****************************************");
     }
 
-    // 🟥 OPPONENT BOARD (YOUR TASK 🔥)
+    // OPPONENT BOARD (YOUR TASK )
     public void printOpponentBoard() {
-        System.out.print("  ");
-        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-            System.out.print((j + 1) + " ");
-        }
-        System.out.println();
-        System.out.println("****************************************");
+        printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
             System.out.print((char)('A' + i) + " * ");
@@ -107,6 +97,15 @@ public class Board {
             System.out.println("*");
         }
 
+        System.out.println("****************************************");
+    }
+
+    private static void printHeader() {
+        System.out.print("  ");
+        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+            System.out.print((j + 1) + " ");
+        }
+        System.out.println();
         System.out.println("****************************************");
     }
 }

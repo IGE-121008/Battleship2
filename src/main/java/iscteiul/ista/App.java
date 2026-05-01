@@ -13,7 +13,7 @@ public class App {
 
         System.out.printf("\n*** Battleship Game ***\n");
 
-        Tasks t = new Tasks();
+        //Tasks t = new Tasks();
         //Tasks.taskA();
         //Tasks.taskB();
         // Tasks.taskC();
