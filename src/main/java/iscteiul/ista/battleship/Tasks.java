@@ -62,7 +62,7 @@ public class Tasks {
 
                             printBoards(current, opponent);
 
-                            extracted(current, player1);
+                            printShotInstructions(current, player1);
                             firingRound(in, opponent);
 
                             System.out.println(
@@ -112,7 +112,7 @@ public class Tasks {
         System.out.println(GOODBYE_MESSAGE);
     }
 
-    private static void extracted(Game current, Game player1) {
+    private static void printShotInstructions(Game current, Game player1) {
         if (current == player1) {
             System.out.println("=== Jogador 1, é a sua vez! ===");
             System.out.println("Pode jogar " + NUMBER_SHOTS + " vezes");
