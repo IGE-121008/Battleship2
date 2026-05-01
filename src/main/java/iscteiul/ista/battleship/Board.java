@@ -63,19 +63,24 @@ public class Board {
         }
     }
 
-    //  NORMAL BOARD (your board)
+    // ✅ NORMAL BOARD
     public void printVisual() {
         printHeader();
 
         for (int i = 0; i < Fleet.BOARD_SIZE; i++) {
-            System.out.print((char)('A' + i) + " * ");
-            for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
-                System.out.print(grid[i][j] + " ");
-            }
-            System.out.println("*");
+            printRow(i);
         }
 
         printSeparator();
+    }
+
+    // ✅ EXTRACTED METHOD (your refactor)
+    private void printRow(int i) {
+        System.out.print((char)('A' + i) + " * ");
+        for (int j = 0; j < Fleet.BOARD_SIZE; j++) {
+            System.out.print(grid[i][j] + " ");
+        }
+        System.out.println("*");
     }
 
     private static void printSeparator() {
@@ -113,4 +118,5 @@ public class Board {
         System.out.println();
         printSeparator();
     }
+
 }
