@@ -65,11 +65,7 @@ public class Tasks {
                             printShotInstructions(current, player1);
                             firingRound(in, opponent);
 
-                            System.out.println(
-                                    "Hits: " + opponent.getHits()
-                                            + " Inv: " + opponent.getInvalidShots()
-                                            + " Rep: " + opponent.getRepeatedShots()
-                                            + " Restam " + opponent.getRemainingShips() + " navios.");
+                            printRoundStats(opponent);
 
                             if (isGameOver(opponent)) {
                                 System.out.println("Maldito sejas, Java Sparrow...");
@@ -110,6 +106,14 @@ public class Tasks {
         }
 
         System.out.println(GOODBYE_MESSAGE);
+    }
+
+    private static void printRoundStats(Game opponent) {
+        System.out.println(
+                "Hits: " + opponent.getHits()
+                        + " Inv: " + opponent.getInvalidShots()
+                        + " Rep: " + opponent.getRepeatedShots()
+                        + " Restam " + opponent.getRemainingShips() + " navios.");
     }
 
     private static void printShotInstructions(Game current, Game player1) {
