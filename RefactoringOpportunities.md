@@ -1,10 +1,12 @@
 | Local | Code smell | Refactoring method | Nº aluno |
 |---|---|---|---|
-| Tasks::taskD | Long Method | Extract Method printTurnHeader | 121008 |
-| Tasks::taskD | Complex Conditional | Decompose Conditional | 121008 |
-| Board::printVisual | Duplicated Code | Extract Method printHeader | 121008 |
-| Tasks::taskE | Long Method | Extract Method playTurn | 121008 |
-| Board::printVisual | Duplicated Code | Introduce Constant BORDER | 121008 |
+| Local              | Code Smell      | Refactoring                    | Nº Aluno |
+| ------------------ | --------------- | ------------------------------ | -------- |
+| Tasks::taskD       | Long Method     | Extract Method printTurnHeader | 121008   |
+| Tasks::taskD       | Long Method     | Extract Method printStats      | 121008   |
+| Board::printVisual | Duplicated Code | Extract Method printSeparator  | 121008   |
+| Tasks::taskE       | Long Method     | Extract Method playTurn        | 121008   |
+| Board::printVisual | Duplicated Code | Introduce Constant BORDER      | 121008   |
 | Tasks::taskE | Long Method | Extract Method printTurnHeader | 110002 |
 | Tasks::taskE | Complex Conditional | Decompose Conditional | 110002 |
 | Tasks::taskD | Long Method | Extract Method printBoards | 110002 |
