@@ -86,7 +86,7 @@ public class Tasks {
                                             + " Rep: " + opponent.getRepeatedShots()
                                             + " Restam " + opponent.getRemainingShips() + " navios.");
 
-                            if (opponent.getRemainingShips() == 0) {
+                            if (isGameOver(opponent)) {
                                 System.out.println("Maldito sejas, Java Sparrow...");
                                 break;
                             }
@@ -211,7 +211,7 @@ public class Tasks {
 
                 firingRound(in, game1);
 
-                if (game1.getRemainingShips() == 0) {
+                if (isGameOver(game1)) {
                     System.out.println("PLAYER 1 WINS!");
                     break;
                 }
@@ -226,7 +226,7 @@ public class Tasks {
 
                 firingRound(in, game2);
 
-                if (game2.getRemainingShips() == 0) {
+                if (isGameOver(game2)) {
                     System.out.println("PLAYER 2 WINS!");
                     break;
                 }
@@ -234,6 +234,10 @@ public class Tasks {
 
             player1Turn = !player1Turn;
         }
+    }
+
+    private static boolean isGameOver(Game game) {
+        return game.getRemainingShips() == 0;
     }
 
     private static void printTurnHeader(boolean player1Turn) {
