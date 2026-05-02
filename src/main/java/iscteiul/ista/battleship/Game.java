@@ -55,19 +55,23 @@ public class Game implements IGame {
         IShip s = fleet.shipAt(pos);
 
         if (s != null) {
-            // HIT
-            s.shoot(pos);
-            countHits++;
-            board.markShot(pos, true);
-
-            if (!s.stillFloating()) {
-                countSinks++;
-                return s; // navio afundado
-            }
-
+            return handleHit(pos, s);
         } else {
             // MISS
             board.markShot(pos, false);
+        }
+
+        return null;
+    }
+
+    private IShip handleHit(IPosition pos, IShip ship) {
+        ship.shoot(pos);
+        countHits++;
+        board.markShot(pos, true);
+
+        if (!ship.stillFloating()) {
+            countSinks++;
+            return ship;
         }
 
         return null;
