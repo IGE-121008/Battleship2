@@ -151,9 +151,13 @@ public class Game implements IGame {
     {
         return getRemainingShips() == 0;
     }
+
     private boolean validShot(IPosition pos) {
-        return (pos.getRow() >= 0 && pos.getRow() < Fleet.BOARD_SIZE && pos.getColumn() >= 0
-                && pos.getColumn() < Fleet.BOARD_SIZE);
+        return isInsideBoard(pos.getRow()) && isInsideBoard(pos.getColumn());
+    }
+
+    private boolean isInsideBoard(int coordinate) {
+        return coordinate >= 0 && coordinate < Fleet.BOARD_SIZE;
     }
 
     private boolean repeatedShot(IPosition pos) {
@@ -162,7 +166,6 @@ public class Game implements IGame {
                 return true;
         return false;
     }
-
 
     public void printBoard(List<IPosition> positions, Character marker) {
         char[][] map = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];
@@ -181,7 +184,6 @@ public class Game implements IGame {
         }
 
     }
-
 
     /**
      * Prints the board showing valid shots that have been fired
@@ -207,13 +209,10 @@ public class Game implements IGame {
         return board;
     }
 
-
     public boolean wasHit(IPosition pos) {
         IShip s = fleet.shipAt(pos);
         return s != null;
     }
-
-
 }
 
 
