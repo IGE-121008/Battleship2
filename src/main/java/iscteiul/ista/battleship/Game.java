@@ -65,15 +65,24 @@ public class Game implements IGame {
 
     private IShip handleHit(IPosition pos, IShip ship) {
         ship.shoot(pos);
-        countHits++;
         board.markShot(pos, true);
 
-        if (!ship.stillFloating()) {
-            countSinks++;
+        boolean shipSunk = !ship.stillFloating();
+        updateStats(shipSunk);
+
+        if (shipSunk) {
             return ship;
         }
 
         return null;
+    }
+
+    private void updateStats(boolean shipSunk) {
+        countHits++;
+
+        if (shipSunk) {
+            countSinks++;
+        }
     }
 
     private void handleMiss(IPosition pos) {
