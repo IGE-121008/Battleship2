@@ -57,8 +57,7 @@ public class Game implements IGame {
         if (s != null) {
             return handleHit(pos, s);
         } else {
-            // MISS
-            board.markShot(pos, false);
+            handleMiss(pos);
         }
 
         return null;
@@ -75,6 +74,10 @@ public class Game implements IGame {
         }
 
         return null;
+    }
+
+    private void handleMiss(IPosition pos) {
+        board.markShot(pos, false);
     }
 
     private boolean validateShot(IPosition pos) {
