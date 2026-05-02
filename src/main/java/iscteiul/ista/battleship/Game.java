@@ -42,40 +42,49 @@ public class Game implements IGame {
      *
      * @see battleship.IGame#fire(battleship.IPosition)
      */
+
     @Override
     public IShip fire(IPosition pos) {
 
-        if (!validShot(pos)) {
-            countInvalidShots++;
-        } else {
+        if (!validateShot(pos)) {
+            return null;
+        }
 
-            if (repeatedShot(pos)) {
-                countRepeatedShots++;
-            } else {
+        shots.add(pos);
 
-                shots.add(pos);
+        IShip s = fleet.shipAt(pos);
 
-                IShip s = fleet.shipAt(pos);
+        if (s != null) {
+            // HIT
+            s.shoot(pos);
+            countHits++;
+            board.markShot(pos, true);
 
-                if (s != null) {
-                    //  HIT
-                    s.shoot(pos);
-                    countHits++;
-                    board.markShot(pos, true);
-
-                    if (!s.stillFloating()) {
-                        countSinks++;
-                        return s; //  navio afundado
-                    }
-
-                } else {
-                    //  MISS
-                    board.markShot(pos, false);
-                }
+            if (!s.stillFloating()) {
+                countSinks++;
+                return s; // navio afundado
             }
+
+        } else {
+            // MISS
+            board.markShot(pos, false);
         }
 
         return null;
+    }
+
+    private boolean validateShot(IPosition pos) {
+        if (!validShot(pos)) {
+            countInvalidShots++;
+            return false;
+        }
+
+        if (repeatedShot(pos)) {
+            countRepeatedShots++;
+            return false;
+        }
+
+        return true;
     }
 
     /*
