@@ -12,11 +12,9 @@ public class App {
     public static void main(String[] args) {
 
         System.out.printf("\n*** Battleship Game ***\n");
+        System.out.println("Running Task D...");
+        System.out.println("Type one of the valid commands when asked.");
 
-        //Tasks t = new Tasks();
-        //Tasks.taskA();
-        //Tasks.taskB();
-        // Tasks.taskC();
         Tasks.taskD();
 
         Scoreboard scoreboard = Scoreboard.loadScoreboard();
