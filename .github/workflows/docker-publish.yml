@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t mykhello3/battleship-game:latest .
+        run: docker build -t mykhelloo3/battleship-game:latest .
 
       - name: Push Docker image
-        run: docker push mykhello3/battleship-game:latest
+        run: docker push mykhelloo3/battleship-game:latest
