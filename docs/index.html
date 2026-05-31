@@ -1,0 +1,286 @@
+```html
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship - TP05-5</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #0369a1);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background: #0f172a;
+            text-align: center;
+            padding: 12px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #0369a1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #e0f2fe;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #0369a1;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 8px 8px 8px 0;
+        }
+
+        .button:hover {
+            background: #075985;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #0f172a;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⚓ Battleship</h1>
+    <p>Projeto de Engenharia de Software - Grupo TP05-5</p>
+</header>
+
+<nav>
+    <a href="#grupo">Grupo</a>
+    <a href="#navios">Navios</a>
+    <a href="#regras">Regras</a>
+    <a href="#documentacao">Documentação</a>
+</nav>
+
+<main>
+
+    <section>
+        <h2>🎮 Sobre o Projeto</h2>
+        <p>
+            Este projeto consiste no desenvolvimento de uma versão do jogo
+            <strong>Batalha Naval</strong>, inspirada na época dos Descobrimentos Portugueses.
+        </p>
+        <a class="button" href="https://youtu.be/DBHo-IXuEMY" target="_blank">Ver vídeo no YouTube</a>
+    </section>
+
+    <section id="grupo">
+        <h2>👥 Grupo</h2>
+        <table>
+            <tr>
+                <th>Grupo</th>
+                <th>Curso</th>
+                <th>Nome</th>
+                <th>Número</th>
+            </tr>
+            <tr>
+                <td>TP05-5</td>
+                <td>IGE</td>
+                <td>Miguel Quinta</td>
+                <td>108419</td>
+            </tr>
+            <tr>
+                <td>TP05-5</td>
+                <td>IGE</td>
+                <td>Élie Kalumba</td>
+                <td>110002</td>
+            </tr>
+            <tr>
+                <td>TP05-5</td>
+                <td>IGE</td>
+                <td>Michael Sewedo Dosu</td>
+                <td>121008</td>
+            </tr>
+            <tr>
+                <td>TP05-5</td>
+                <td>IGE</td>
+                <td>João Sousa</td>
+                <td>110772</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="navios">
+        <h2>⚓ Tipos de Navios</h2>
+        <p>
+            Nesta versão histórica da Batalha Naval são utilizados navios associados
+            à época dos Descobrimentos.
+        </p>
+
+        <table>
+            <tr>
+                <th>Nome PT</th>
+                <th>Nome EN</th>
+                <th>Dimensão</th>
+                <th>Quantidade</th>
+            </tr>
+            <tr>
+                <td>Galeão</td>
+                <td>Galleon</td>
+                <td>5</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Fragata</td>
+                <td>Frigate</td>
+                <td>4</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Nau</td>
+                <td>Carrack</td>
+                <td>3</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Caravela</td>
+                <td>Caravel</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Barca</td>
+                <td>Barge</td>
+                <td>1</td>
+                <td>4</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="regras">
+        <h2>🎯 Regras do Jogo</h2>
+
+        <h3>Posicionamento dos navios</h3>
+        <ul>
+            <li>Os navios apenas podem ser colocados na horizontal ou vertical.</li>
+            <li>Não podem sobrepor-se.</li>
+            <li>Não podem tocar-se.</li>
+            <li>Podem encostar à borda da grelha.</li>
+        </ul>
+
+        <h3>Funcionamento</h3>
+        <ul>
+            <li>O jogo é jogado numa grelha 10x10.</li>
+            <li>Cada jogador possui uma grelha com a sua frota.</li>
+            <li>Cada jogador possui uma grelha para registar tiros no adversário.</li>
+            <li>Cada jogador dispara 3 tiros por turno.</li>
+            <li>Ganha o jogador que afundar todos os navios do adversário primeiro.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🗺 Contexto Histórico</h2>
+        <p>
+            Esta versão inspira-se na frota marítima da época dos Descobrimentos Portugueses.
+            Navios como o galeão, a nau, a caravela e a fragata foram importantes na expansão
+            marítima portuguesa dos séculos XV e XVI.
+        </p>
+    </section>
+
+    <section>
+        <h2>🔗 Links úteis</h2>
+        <ul>
+            <li><a href="https://pt.wikipedia.org/wiki/Gale%C3%A3o" target="_blank">Galeão</a></li>
+            <li><a href="https://pt.wikipedia.org/wiki/Fragata" target="_blank">Fragata</a></li>
+            <li><a href="https://pt.wikipedia.org/wiki/Nau" target="_blank">Nau</a></li>
+            <li><a href="https://pt.wikipedia.org/wiki/Caravela" target="_blank">Caravela</a></li>
+            <li><a href="https://pt.wikipedia.org/wiki/Barca" target="_blank">Barca</a></li>
+            <li><a href="https://pt.wikipedia.org/wiki/Descobrimentos_portugueses" target="_blank">Descobrimentos Portugueses</a></li>
+        </ul>
+    </section>
+
+    <section id="documentacao">
+        <h2>📚 Documentação</h2>
+        <p>
+            A documentação JavaDoc do projeto está disponível através do link abaixo.
+        </p>
+        <a class="button" href="apidocs/index.html">Ver JavaDoc</a>
+    </section>
+
+    <section>
+        <h2>⚙️ GitHub Actions</h2>
+        <p>
+            Este projeto utiliza GitHub Actions para executar automaticamente os testes
+            unitários a cada push para o repositório.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    <p>Projeto Battleship - Engenharia de Software 2025/2026</p>
+</footer>
+
+</body>
+</html>
+```
