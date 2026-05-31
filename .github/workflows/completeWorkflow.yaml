@@ -1,0 +1,107 @@
+name: Complete CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Required secrets: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN, SONAR_TOKEN
+  JAVA_VERSION: "21"
+  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/battleship-game:latest
+  SONAR_HOST_URL: https://sonarcloud.io
+  SONAR_ORGANIZATION: IGE-121008
+  SONAR_PROJECT_KEY: IGE-121008_Battleship2
+
+jobs:
+  build-test-analyze-package-publish:
+    name: Build, Test, Analyze, Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: maven
+
+      - name: Verify dependencies
+        run: mvn -B dependency:tree
+
+      - name: Compile project
+        run: mvn -B clean compile
+
+      - name: Run unit tests
+        run: mvn -B test
+
+      - name: Check SonarQube Cloud quality gate
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          mvn -B
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -DskipTests
+          -Dsonar.token=${SONAR_TOKEN}
+          -Dsonar.host.url=${SONAR_HOST_URL}
+          -Dsonar.organization=${SONAR_ORGANIZATION}
+          -Dsonar.projectKey=${SONAR_PROJECT_KEY}
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+          -Dsonar.qualitygate.wait=true
+          -Dsonar.qualitygate.timeout=300
+
+      - name: Package application
+        run: mvn -B package -DskipTests
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t "${DOCKER_IMAGE}" .
+
+      - name: Publish Docker image
+        run: docker push "${DOCKER_IMAGE}"
+
+      - name: Generate Maven site
+        run: mvn -B site javadoc:javadoc
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target/site
+
+  deploy-pages:
+    name: Deploy GitHub Pages
+    needs: build-test-analyze-package-publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
