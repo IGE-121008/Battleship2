@@ -24,6 +24,11 @@ public class Tasks {
         Game current = null;
         Game opponent = null;
 
+        if (!in.hasNext()) {
+            System.out.println("No command provided.");
+            return;
+        }
+
         String command = in.next();
 
         while (!command.equals(DESISTIR)) {
@@ -99,6 +104,11 @@ public class Tasks {
                     System.out.println("Que comando é esse??? Repete ...");
             }
 
+            if (!in.hasNext()) {
+                System.out.println("No more commands provided.");
+                break;
+            }
+
             command = in.next();
         }
 
@@ -167,7 +177,7 @@ public class Tasks {
         Position pos = readPosition(in);
         char c = in.next().charAt(0);
         Compass bearing = Compass.charToCompass(c);
-        return Ship.buildShip(shipKind, bearing, pos);
+        return Ship.buildShip(ShipType.fromString(shipKind), bearing, pos);
     }
 
     static Position readPosition(Scanner in) {

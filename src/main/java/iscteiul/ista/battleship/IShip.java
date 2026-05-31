@@ -32,5 +32,7 @@ public interface IShip {
 
     boolean tooCloseTo(IPosition pos);
 
+    boolean collidesWith(IShip other);
+
     void shoot(IPosition pos);
 }
