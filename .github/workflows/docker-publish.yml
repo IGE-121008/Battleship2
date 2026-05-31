@@ -7,6 +7,10 @@ on:
       - feature/docker-deployment
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
