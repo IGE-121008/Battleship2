@@ -1,0 +1,165 @@
+{
+  "id": "34c4ddb0-02fe-4590-a820-bc9de1ebd3eb",
+  "version": "2.0",
+  "name": "TestSuite_121008",
+  "url": "https://ige-121008.github.io",
+  "tests": [{
+    "id": "2ad1f274-9a3a-41fe-a308-f2839b47003b",
+    "name": "UserStoryTest1",
+    "commands": [{
+      "id": "1cd74cdd-44d1-4b76-b101-a07531fd3d19",
+      "comment": "",
+      "command": "open",
+      "target": "/Battleship2/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b7dde482-f6de-4637-90b0-caa61e2d0c85",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "81b90c0b-3eec-4f42-b4e2-4854b058d445",
+      "comment": "",
+      "command": "click",
+      "target": "css=ul:nth-child(40) > li:nth-child(1)",
+      "targets": [
+        ["css=ul:nth-child(40) > li:nth-child(1)", "css:finder"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'Galleon: https://pt.wikipedia.org/wiki/Gale%C3%A3o')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "46b45e7a-3d6b-4f45-9358-b4b795da0541",
+      "comment": "",
+      "command": "click",
+      "target": "css=ul:nth-child(40) > li:nth-child(1)",
+      "targets": [
+        ["css=ul:nth-child(40) > li:nth-child(1)", "css:finder"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'Galleon: https://pt.wikipedia.org/wiki/Gale%C3%A3o')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1cb0c020-146c-4665-9669-f77ae9a351c4",
+      "comment": "",
+      "command": "click",
+      "target": "css=ul:nth-child(40) > li:nth-child(1)",
+      "targets": [
+        ["css=ul:nth-child(40) > li:nth-child(1)", "css:finder"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'Galleon: https://pt.wikipedia.org/wiki/Gale%C3%A3o')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f09ef2ad-7686-4e34-bcf3-957e20ca7d25",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(3)",
+      "targets": [
+        ["css=li:nth-child(3)", "css:finder"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'Ship : https://pt.wikipedia.org/wiki/Nau')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "45de7e7a-e54e-4178-8f83-18bc6896f9a1",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(2)",
+      "targets": [
+        ["css=li:nth-child(2)", "css:finder"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'Frigate: https://pt.wikipedia.org/wiki/Fragata')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dcf400fd-34d4-45b5-a25a-ef6aecb39d3c",
+      "comment": "",
+      "command": "click",
+      "target": "css=ul:nth-child(40)",
+      "targets": [
+        ["css=ul:nth-child(40)", "css:finder"],
+        ["xpath=//ul", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5558f2c7-ab50-4e49-8c43-c154490b80dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(3)",
+      "targets": [
+        ["css=li:nth-child(3)", "css:finder"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'Ship : https://pt.wikipedia.org/wiki/Nau')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c54c75d-893e-413b-944a-9fb31294e654",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(3)",
+      "targets": [
+        ["css=li:nth-child(3)", "css:finder"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'Ship : https://pt.wikipedia.org/wiki/Nau')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c49bcaf1-38fa-4909-859f-9e2df3ac8b04",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(4)",
+      "targets": [
+        ["css=li:nth-child(4)", "css:finder"],
+        ["xpath=//li[4]", "xpath:position"],
+        ["xpath=//li[contains(.,'Caravel: https://pt.wikipedia.org/wiki/Caravela')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d77b5831-1ee7-4ae3-b6b2-b7ebe00cc71d",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(5)",
+      "targets": [
+        ["css=li:nth-child(5)", "css:finder"],
+        ["xpath=//li[5]", "xpath:position"],
+        ["xpath=//li[contains(.,'Ferry : https://pt.wikipedia.org/wiki/Barca')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d077c1b-258d-47e7-a3ad-0c1771c6aadb",
+      "comment": "",
+      "command": "click",
+      "target": "css=ul:nth-child(42) > li",
+      "targets": [
+        ["css=ul:nth-child(42) > li", "css:finder"],
+        ["xpath=//ul[2]/li", "xpath:position"],
+        ["xpath=//li[contains(.,'Portuguese Discoveries : https://pt.wikipedia.org/wiki/Descobrimentos_portugueses')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6cce904f-4a2b-465b-b499-4b5e1bc73529",
+      "comment": "",
+      "command": "click",
+      "target": "css=p:nth-child(3)",
+      "targets": [
+        ["css=p:nth-child(3)", "css:finder"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "c7706bec-6b9a-4592-8062-1f3c337bc212",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["2ad1f274-9a3a-41fe-a308-f2839b47003b"]
+  }],
+  "urls": ["https://ige-121008.github.io/"],
+  "plugins": []
+}

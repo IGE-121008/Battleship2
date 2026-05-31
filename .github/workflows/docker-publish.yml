@@ -5,6 +5,9 @@ on:
 
 env:
   DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/battleship-game:latest
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build-and-publish:
