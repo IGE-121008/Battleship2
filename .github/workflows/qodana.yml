@@ -5,6 +5,9 @@ on:
   #push:
   #pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   qodana:
     runs-on: ubuntu-latest
